@@ -1,4 +1,4 @@
-# e-cedi App 
+# e-Cedi App 
 
 This is an Expo React Native App developed by me.
 
