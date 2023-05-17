@@ -39,7 +39,7 @@ const onTermsOfUsePressed  = () => {
       {/* Top Section */}
     <Animatable.View iterationCount={"infinite"} animation={"pulse"} easing="ease-in-out" className="flex-row px-6 mt-12 items-center justify-center space-x-1">
         <View className=" w-10 h-10 bg-black rounded-full items-center justify-center">
-            <Text className="text-white text-[28px] font-semibold">e</Text>
+            <Text className="text-white text-[28px] font-semibold text-center">e</Text>
         </View>
         <Text className="text-black text-[28px] font-semibold">CEDI</Text>
     </Animatable.View>
