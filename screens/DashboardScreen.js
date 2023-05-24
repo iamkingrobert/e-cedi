@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,9 +9,18 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 
+import AddMoneyModal from '../components/AddMoneyModal';
+
+
+
 export default function DashboardScreen() {
-    // Hide HEADER HERE
+    // NAVIGATION CONTROL
     const navigation = useNavigation();
+
+    // MODAL CONTROL
+    const [showModal, setShowModal] = useState(false);
+
+    // Hide HEADER HERE
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown : false,
@@ -20,7 +29,6 @@ export default function DashboardScreen() {
 
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
-
     {/* NOTIFICATION & USER ICONS */}
     <View className="flex-row space-x-[242px] justify-center mt-1">
     <View className="flex-row space-x-1">
@@ -47,14 +55,16 @@ export default function DashboardScreen() {
 
      {/* ADD MONEY BUTTON*/}
      <TouchableOpacity
-    onPress={() => navigation.navigate("ADDMODAL HERE")} className="items-center justify-center">  
+    onPress={() => setShowModal(true)} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <FontAwesome5 name="money-check" size={25} color="black" />
     </View>
     <Text className=" text-black text-[17px] pl-3 pt-5 ">Add Money</Text>
     </View>
+    {/* {showModal &&  <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>} */}
     </TouchableOpacity>
+   
 
     {/* SEND OR INVEST MONEY*/}
     <Animatable.View iterationCount={"infinite"} animation={"pulse"} easing="ease-in-out" className="justify-center mt-12 ml-3">
@@ -124,6 +134,7 @@ export default function DashboardScreen() {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
     </Animatable.View>
+    <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>
     </SafeAreaView>
   )
 }
