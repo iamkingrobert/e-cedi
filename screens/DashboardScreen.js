@@ -9,7 +9,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 
-import AddMoneyModal from '../components/AddMoneyModal';
+// import AddMoneyModal from '../components/AddMoneyModal';
+// import SendMoney from '../components/SendMoney';
 
 
 
@@ -17,8 +18,11 @@ export default function DashboardScreen() {
     // NAVIGATION CONTROL
     const navigation = useNavigation();
 
-    // MODAL CONTROL
-    const [showModal, setShowModal] = useState(false);
+    // TOPUP MODAL CONTROL
+    // const [showModal, setShowModal] = useState(false);
+
+    // SEND MONEY MODAL CONTROL
+    // const [openModal, setOpenModal] = useState(false);
 
     // Hide HEADER HERE
     useLayoutEffect(() => {
@@ -55,7 +59,7 @@ export default function DashboardScreen() {
 
      {/* ADD MONEY BUTTON*/}
      <TouchableOpacity
-    onPress={() => setShowModal(true)} className="items-center justify-center">  
+    onPress={() => navigation.navigate("TopUpScreen")} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <FontAwesome5 name="money-check" size={25} color="black" />
@@ -73,7 +77,7 @@ export default function DashboardScreen() {
 
      {/* SEND MONEY BUTTON*/}
      <TouchableOpacity
-    onPress={() => navigation.navigate("ADDMODAL HERE")} className="items-center justify-center">  
+    onPress={() => navigation.navigate("TopUpScreen")} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <Feather name="send" size={25} color="black" />
@@ -87,7 +91,7 @@ export default function DashboardScreen() {
 
     {/* INVEST MONEY BUTTON*/}
     <TouchableOpacity
-    onPress={() => navigation.navigate("ADDMODAL HERE")} className="items-center justify-center">  
+    onPress={() => navigation.navigate("Invest Screen HERE")} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <Ionicons name="briefcase-outline" size={24} color="black" />
@@ -101,7 +105,7 @@ export default function DashboardScreen() {
 
     {/* PAY BILLS BUTTON*/}
     <TouchableOpacity
-    onPress={() => navigation.navigate("ADDMODAL HERE")} className="items-center justify-center">  
+    onPress={() => navigation.navigate("Bill Payment Screen HERE")} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <FontAwesome name="money" size={25} color="black" />
@@ -115,7 +119,7 @@ export default function DashboardScreen() {
 
      {/* ATM WITHDRAWAL BUTTON*/}
      <TouchableOpacity
-    onPress={() => navigation.navigate("ADDMODAL HERE")} className="items-center justify-center">  
+    onPress={() => navigation.navigate("Cash Withdraw Screen HERE")} className="items-center justify-center">  
     <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
     <View className="mt-4 ml-5">
     <MaterialCommunityIcons name="cash-multiple" size={25} color="black" />
@@ -134,7 +138,8 @@ export default function DashboardScreen() {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
     </Animatable.View>
-    <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>
+    {/* <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>
+    <SendMoney setOpenModal={setOpenModal} openModal={openModal}/> */}
     </SafeAreaView>
   )
 }

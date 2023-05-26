@@ -7,6 +7,7 @@ import SignOnScreen from './screens/SignOnScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import { NativeBaseProvider } from 'native-base';
+import TopUpScreen from './screens/TopUpScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="SignOnScreen" component={SignOnScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen name="TopUpScreen" component={TopUpScreen} />
       </Stack.Navigator>
     </NavigationContainer></NativeBaseProvider>
   );
