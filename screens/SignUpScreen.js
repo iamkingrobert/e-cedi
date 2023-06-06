@@ -40,7 +40,6 @@ export default function SignUpScreen() {
         lastName,
         tel,
         email,
-        password,
       });
       })
       .catch((error) => {

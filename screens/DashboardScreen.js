@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Pressable } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -7,17 +7,42 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
-
-
-
-// import AddMoneyModal from '../components/AddMoneyModal';
-// import SendMoney from '../components/SendMoney';
-
+import { getAuth } from 'firebase/auth';
+import app from '../config/firebase';
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 
 export default function DashboardScreen() {
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+const userId = getAuth().currentUser.uid;
+const docRef = doc(db, "users", userId);
+const [firstName,setFirstName]=useState()
+
+
     // NAVIGATION CONTROL
     const navigation = useNavigation();
+
+    useEffect(()=>{
+     const getData=async()=>{
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+setFirstName( docSnap.data().firstName)    ;    
+
+
+        } else {
+          // docSnap.data() will be undefined in this case
+          // console.log("No such document!");
+        } 
+        }
+        getData()
+       
+
+        },[])
+    
+
 
     // TOPUP MODAL CONTROL
     // const [showModal, setShowModal] = useState(false);
@@ -30,6 +55,8 @@ export default function DashboardScreen() {
         navigation.setOptions({
             headerShown : false,
         })
+
+        
     }, []);
 
   return (
@@ -39,7 +66,7 @@ export default function DashboardScreen() {
     <View className="flex-row space-x-[242px] justify-center mt-1">
     <View className="flex-row space-x-1">
     <FontAwesome name="user-circle-o" size={27} color="black" />
-    <Text className="pt-1 text-[15px] font-semibold">Hey Robert</Text>
+    <Text className="pt-1 text-[15px] font-semibold">Hey {firstName}</Text>
     </View>
     <Ionicons name="notifications" size={27} color="black" />
     </View>
@@ -146,3 +173,4 @@ export default function DashboardScreen() {
     </SafeAreaView>
   )
 }
+
