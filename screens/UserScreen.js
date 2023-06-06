@@ -7,12 +7,26 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import app from '../config/firebase';
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
+
 export default function UserScreen() {
+
+    // NAVIGATION CONTROL
+    const navigation = useNavigation();
+
+//User Signout Function
+
+const handleSignout =() => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+  // Sign-out successful.
+  navigation.replace("SignOnScreen");
+    }).catch((error) => alert(error.message));
+}
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -21,8 +35,7 @@ const docRef = doc(db, "users", userId);
 const [firstName,setFirstName]=useState()
 const [lastName,setLastName]=useState()
 const [email,setEmail]=useState()
-    // NAVIGATION CONTROL
-    const navigation = useNavigation();
+    
 
     useEffect(()=>{
         const getData=async()=>{
@@ -91,7 +104,7 @@ const [email,setEmail]=useState()
     </View>
     </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate("")}>
+    <TouchableOpacity onPress={handleSignout}>
     <View className="flex-row mt-8 space-x-3 ml-6">
     <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
     <Entypo name="log-out" size={27} color="white" />
