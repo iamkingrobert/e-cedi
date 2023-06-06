@@ -35,6 +35,7 @@ export default function DashboardScreen() {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
     {/* NOTIFICATION & USER ICONS */}
+    <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
     <View className="flex-row space-x-[242px] justify-center mt-1">
     <View className="flex-row space-x-1">
     <FontAwesome name="user-circle-o" size={27} color="black" />
@@ -42,6 +43,7 @@ export default function DashboardScreen() {
     </View>
     <Ionicons name="notifications" size={27} color="black" />
     </View>
+    </TouchableOpacity>
 
     {/* USER ACCOUNT BALANCE */}
    <View className="items-center justify-center">

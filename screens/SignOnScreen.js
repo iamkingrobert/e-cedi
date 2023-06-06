@@ -66,7 +66,7 @@ const onSignUpPressed  = () => {
       placeholder='Enter your email'
       type="email" value={email}
       setValue={setEmail}
-      autoCapitalize={false} 
+      autoCapitalize="none" 
       className="mt-2"/>
       <CustomInput 
       placeholder='Enter your password' 

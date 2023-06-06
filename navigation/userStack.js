@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import DashboardScreen from '../screens/DashboardScreen';
 import TopUpScreen from '../screens/TopUpScreen';
+import UserScreen from '../screens/UserScreen';
 const Stack = createNativeStackNavigator();
 
 export default function userStack(){
@@ -10,6 +11,7 @@ export default function userStack(){
         <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="TopUpScreen" component={TopUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>

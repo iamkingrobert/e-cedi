@@ -119,7 +119,7 @@ const onTermsOfUsePressed  = () => {
       value={email}
       setValue={setEmail} 
       type="email"
-      autoCapitalize={false}
+      autoCapitalize="none"
       />
 
       <CustomInput 
