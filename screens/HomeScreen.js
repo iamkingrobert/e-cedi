@@ -59,8 +59,7 @@ const HomeScreen = () => {
 
      {/* NAVIGATIONS TO DASHBOARD | THIS IS JUST FOR DEVELOPMENT PURPOSE ONLY */}
     {/* Footer Copyright ||| REMOVE THE ONPRESSED ON THE COPYRIGHT WHEN AUTHENTICATION IS COMPLETE*/}
-    <TouchableOpacity
-    onPress={() => navigation.navigate("DashboardScreen")}> 
+    <TouchableOpacity> 
     <View className="mt-[76px] space-y-3 px-6 items-center justify-center">
         <Text className="text-[10px] text-gray-700">Developed By King Robert</Text>
     </View>

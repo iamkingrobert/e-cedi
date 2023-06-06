@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 
-export default function CustomInput({value, setValue, placeholder, secureTextEntry, type}) {
+export default function CustomInput({value, setValue, placeholder, secureTextEntry, type, autoCapitalize}) {
   return (
     <View style={styles.container}>
       <TextInput
@@ -10,6 +10,8 @@ export default function CustomInput({value, setValue, placeholder, secureTextEnt
       placeholder={placeholder}
       style={styles.input}
         secureTextEntry={secureTextEntry}
+        type={type}
+        autoCapitalize={autoCapitalize}
       />
     </View>
   )

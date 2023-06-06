@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, Image, Pressable } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,12 +9,18 @@ import MTN from '../assets/MTN-Momo.jpeg'
 import AirtelTigo from '../assets/airteltigo-money.png'
 import Vodafone from '../assets/Vodafone-Cash.jpeg'
 import CreditCard from '../assets/eCediCard.jpeg'
-
-
-
+import Payment from '../components/Payment';
+// import { BottomModal, ModalContent, ModalFooter, ModdalTitle, SlideAnimation } from 'react-native-modals';
 
 
 export default function TopUpScreen() {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  //TRIGGER PAYSTACK MODAL
+  const [triggerTransaction, setTriggerTransaction] = useState(false);
+
+
     // NAVIGATION CONTROL
     const navigation = useNavigation();
 
@@ -57,10 +63,12 @@ export default function TopUpScreen() {
     <View className="flex-row items-center justify-center mt-3 space-x-5">
      {/* MTN BUTTON*/}
      <TouchableOpacity
-    onPress={() => setShowModal(true)} className="items-center justify-center">  
+     //
+    onPress={() => setTriggerTransaction(true)} className="items-center justify-center">  
     <Animatable.View iterationCount={"infinite"} animation={"pulse"} easing="ease-in-out" className="mt-2">
     <Image source={MTN} className=" h-[100px] w-[100px] rounded-lg"/>
     </Animatable.View>
+    {<Payment setTriggerTransaction={setTriggerTransaction} triggerTransaction={triggerTransaction}/>}
     </TouchableOpacity>
 
     {/* AIRTELTIGO BUTTON*/}
@@ -123,6 +131,32 @@ export default function TopUpScreen() {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
     </Animatable.View>
+    {/* <Payment setTriggerTransaction={setTriggerTransaction} triggerTransaction={triggerTransaction}/> */}
+
+    {/* <BottomModal onBackdropPress={()=> setModalVisible(!modalVisible) } swipeDirection={['up', 'down']} swipeThreshold={200} footer={<ModalFooter>
+      <Pressable className="pr-10 ml-auto mr-auto mx-10">
+      <Text>Top Up</Text>
+      </Pressable>
+    </ModalFooter>}
+    modalTitle={<ModdalTitle title="Load Your Wallet"/>}
+    modalAnimation={
+      new SlideAnimation({
+         slideFrom: 'buttom'
+      })
+      }
+      onHardwareBackPress={() => setModalVisible(!modalVisible)}
+      visible={modalVisible}
+      onTouchOutside={()=> setModalVisible(!modalVisible)}
+    >
+    <ModalContent className='w-[100%] h-[280px]'>
+    <View>
+      <View>
+
+      </View>
+    </View>
+    </ModalContent>
+    </BottomModal> */}
     </SafeAreaView>
+   
   )
 }

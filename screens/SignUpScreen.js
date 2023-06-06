@@ -1,13 +1,58 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Animatable from 'react-native-animatable';
 import CustomInput from '../components/CustomInput';
 import Button from '../components/Button';
 import BlackStar from '../assets/Star.png'
+import app from '../config/firebase';
+import { doc, setDoc } from "firebase/firestore"; 
+import { getFirestore } from "firebase/firestore";
+
+//Import getAuth and CreateuserithEmailAndPassword
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+
+
 
 export default function SignUpScreen() {
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [tel, setTel] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [validationMessage, setValidationMessage] = useState('');
+
+  async function createAccount(){
+    email === "" || password === "" ? setValidationMessage("All fields are required")
+      : ""
+    try {
+      await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        const userId=user.uid
+       setDoc(doc(db, "users",userId), {
+        firstName,
+        lastName,
+        tel,
+        email,
+        password,
+      });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      }); 
+      
+    } catch (error) {
+      setValidationMessage(error.message)
+    }
+}
 
     // Hide HEADER HERE
     const navigation = useNavigation();
@@ -51,15 +96,44 @@ const onTermsOfUsePressed  = () => {
 
     {/* USER SIGNUP FORM */}
     <View className=" mt-2 justify-center items-center">
-      <CustomInput placeholder='First name' className="mt-2"/>
-      <CustomInput placeholder='Last name'/>
-      <CustomInput placeholder='Tel:'/>
-      <CustomInput placeholder='Email'/>
-      <CustomInput placeholder='Password'/>
+      <CustomInput 
+      placeholder='First name' 
+      value={firstName}
+      setValue={setFirstName} 
+      type="text" 
+      className="mt-2"/>
+
+      <CustomInput placeholder='Last name' 
+      value={lastName}
+      setValue={setLastName} 
+      type="text"/>
+
+      <CustomInput 
+      placeholder='Tel:' 
+      value={tel}
+      setValue={setTel} 
+      type="text" />
+
+      <CustomInput 
+      placeholder='Email' 
+      value={email}
+      setValue={setEmail} 
+      type="email"
+      autoCapitalize={false}
+      />
+
+      <CustomInput 
+      placeholder='Password' 
+      value={password}
+      setValue={setPassword} 
+      secureTextEntry={true} 
+      type="password"/>
+      <Text className="text-red-700 text-center pt-3">{validationMessage}</Text>
+      <Button text='Register' onPress={createAccount}/>
     </View>
 
     <View className="mt-6 items-center justify-center ">
-    <Button text='Register' onPress={onSignUpPressed}/>
+    
 
     {/* Terms and Conditions */}
     <View className="mt-5 justify-center items-center ">
