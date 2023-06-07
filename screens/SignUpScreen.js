@@ -35,11 +35,13 @@ export default function SignUpScreen() {
         // Signed in 
         const user = userCredential.user;
         const userId=user.uid
+        const defaultBalance = 0;
        setDoc(doc(db, "users",userId), {
         firstName,
         lastName,
         tel,
         email,
+        balance: defaultBalance,
       });
       })
       .catch((error) => {

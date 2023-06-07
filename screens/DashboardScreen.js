@@ -13,23 +13,32 @@ import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 
-export default function DashboardScreen() {
+export default function DashboardScreen({ route }) {
 
 const auth = getAuth(app);
 const db = getFirestore(app);
 const userId = getAuth().currentUser.uid;
 const docRef = doc(db, "users", userId);
 const [firstName,setFirstName]=useState()
+const [balance,setBalance]=useState(0)
 
 
     // NAVIGATION CONTROL
     const navigation = useNavigation();
 
-    useEffect(()=>{
-     const getData=async()=>{
+    useEffect(() => {
+      if (route.params && route.params.balance) {
+        setBalance(route.params.balance);
+      }
+    }, [route.params]);
+  
+
+      useEffect(()=>{
+          const getData=async()=>{
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
-setFirstName( docSnap.data().firstName)    ;    
+      setFirstName( docSnap.data().firstName);   
+      setBalance( docSnap.data().balance || 0);  
 
 
         } else {
@@ -38,8 +47,6 @@ setFirstName( docSnap.data().firstName)    ;
         } 
         }
         getData()
-       
-
         },[])
     
 
@@ -76,7 +83,7 @@ setFirstName( docSnap.data().firstName)    ;
    <View className="items-center justify-center">
    <View className=" mt-12 bg-black w-[350px] h-32 items-center rounded-[15px]">
    <Text className="text-white text-[17px] pt-5">Total Balance</Text>
-   <Text className="text-white text-[18px] pt-4 font-semibold">1582<Text className="text-[14px] text-gray-50">.55</Text></Text>
+   <Text className="text-white text-[18px] pt-4 font-semibold">{balance}<Text className="text-[14px] text-gray-50">.55</Text></Text>
    <Text className="text-white text-[20px]">...</Text>
    </View>
     </View>
