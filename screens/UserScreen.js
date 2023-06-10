@@ -101,6 +101,15 @@ export default function UserScreen() {
       <TouchableOpacity onPress={() => navigation.navigate("")}>
         <View className="flex-row mt-8 space-x-3 ml-5">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
+            <FontAwesome name="line-chart" size={27} color="white" />
+          </View>
+          <Text className="text-[22px]  pt-3">Portfolio Growth</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate("")}>
+        <View className="flex-row mt-8 space-x-3 ml-5">
+          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <Entypo name="trophy" size={27} color="white" />
           </View>
           <Text className="text-[22px]  pt-3">Rewards</Text>
@@ -121,7 +130,7 @@ export default function UserScreen() {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-[200px] items-center justify-center space-x-1"
+        className="flex-row px-6 mt-[120px] items-center justify-center space-x-1"
       >
         <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
           <Text className="text-white text-[16px] font-semibold text-center">
