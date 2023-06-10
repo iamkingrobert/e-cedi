@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Paystack, paystackProps } from "react-native-paystack-webview";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  onSnapshot,
+  getDoc,
+} from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Payment({ triggerTransaction ,setTriggerTransaction}) {
+export default function Payment({ triggerTransaction, setTriggerTransaction }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const [balance, setBalance] = useState(0);
   const navigation = useNavigation();
@@ -17,37 +23,42 @@ export default function Payment({ triggerTransaction ,setTriggerTransaction}) {
     }
   }, [triggerTransaction]);
 
+  const amountPaid = 2000; // Set the desired amount here
+
   const onSuccessTransaction = async (res) => {
     try {
-      console.log('Paystack response:', res);
+      //console.log("Paystack response:", res);
       const auth = getAuth();
       const db = getFirestore();
       const user = auth.currentUser;
       const userId = user.uid;
-  
-      const amountPaid = 1000; // Set the desired amount here
-  
+      //console.log(userId);
+
       // Update the user's balance in the Firestore database
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(db, "users", userId);
+      const newbalance = await getDoc(userRef);
+      //console.log(newbalance.data().balance);
+      let oldBalance = newbalance.data().balance;
+
       await updateDoc(userRef, {
-        balance: amountPaid,
+        balance: amountPaid + oldBalance,
       });
-  
-      console.log('User balance updated');
-  
+
+      //console.log("User balance updated");
+
       // Fetch the user's document to get the updated balance
       onSnapshot(userRef, (snapshot) => {
         const userData = snapshot.data();
         const updatedBalance = userData.balance;
-  
+
         // Update the local state with the updated balance
         setBalance(updatedBalance);
 
         // Pass the updated balance as a prop to the DashboardScreen component
-        navigation.navigate('DashboardScreen', { balance: updatedBalance });
+        navigation.navigate("DashboardScreen", { balance: updatedBalance });
       });
     } catch (error) {
-      console.error('Error updating user balance:', error);
+      console.error("Error updating user balance:", error);
     }
   };
 
@@ -57,7 +68,7 @@ export default function Payment({ triggerTransaction ,setTriggerTransaction}) {
         paystackKey="pk_test_546acb3eb5aff12d460e41d42f2d3407d7898964"
         paystackSecretKey="sk_test_c37deccc8a74d0397d500c57a768d103e1c62bf1"
         billingEmail="iamkingrobert@gmail.com"
-        amount={200}
+        amount={amountPaid}
         billingName="King Robert"
         billingMobile="0547452756"
         currency="GHS"
