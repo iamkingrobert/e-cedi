@@ -65,9 +65,11 @@ export default function UserScreen() {
       </View>
       <View className="justify-center items-center">
         <View className="mt-10 bg-black w-[350px] h-40 items-center rounded-[15px]">
-          <View className="ml-[310px] mt-2">
-            <Feather name="edit" size={20} color="white" />
-          </View>
+          <TouchableOpacity>
+            <View className="ml-[310px] mt-2">
+              <Feather name="edit" size={20} color="white" />
+            </View>
+          </TouchableOpacity>
           <View className="mt-2 items-center justify-center">
             <FontAwesome name="user-circle-o" size={40} color="white" />
           </View>

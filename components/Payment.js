@@ -14,6 +14,9 @@ import { useNavigation } from "@react-navigation/native";
 export default function Payment({ triggerTransaction, setTriggerTransaction }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const [balance, setBalance] = useState(0);
+  const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userNumber, setUserNumber] = useState("");
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -22,6 +25,32 @@ export default function Payment({ triggerTransaction, setTriggerTransaction }) {
       setTriggerTransaction(false);
     }
   }, [triggerTransaction]);
+
+  //Fetching Current logged-in User's Email, Name and Phone Number from Firebase and assigning it to paystack billing info down
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const userId = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+
+        setUserEmail(userData.email);
+        setUserName(userData.name);
+        setUserNumber(userData.number);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  //Fetching User Data at the block of code up
 
   const amountPaid = 2000; // Set the desired amount here
 
@@ -67,10 +96,10 @@ export default function Payment({ triggerTransaction, setTriggerTransaction }) {
       <Paystack
         paystackKey="pk_test_546acb3eb5aff12d460e41d42f2d3407d7898964"
         paystackSecretKey="sk_test_c37deccc8a74d0397d500c57a768d103e1c62bf1"
-        billingEmail="iamkingrobert@gmail.com"
+        billingEmail={userEmail}
         amount={amountPaid}
-        billingName="King Robert"
-        billingMobile="0547452756"
+        billingName={userName}
+        billingMobile={userNumber}
         currency="GHS"
         channels={["mobile_money"]}
         onCancel={(e) => {
