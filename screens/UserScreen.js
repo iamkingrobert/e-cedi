@@ -12,6 +12,7 @@ import app from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
+import ImagePickers from "../screens/ImagePickers";
 
 export default function UserScreen() {
   // NAVIGATION CONTROL
@@ -28,7 +29,7 @@ export default function UserScreen() {
       })
       .catch((error) => alert(error.message));
   };
-
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const userId = getAuth().currentUser.uid;
@@ -58,6 +59,15 @@ export default function UserScreen() {
       headerShown: false,
     });
   }, []);
+
+  //const handleImageSelection = (selectedImage) => {
+  // Do something with the selected image
+  // For example, you can upload it to a server or update the user's profile picture
+  // console.log(selectedImage);
+  // Update the state or perform any necessary actions
+  // setShowImagePicker(false);
+  // };
+
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       <View className="items-center justify-center mt-6">
@@ -65,7 +75,9 @@ export default function UserScreen() {
       </View>
       <View className="justify-center items-center">
         <View className="mt-10 bg-black w-[350px] h-40 items-center rounded-[15px]">
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Update Profile")}
+          >
             <View className="ml-[310px] mt-2">
               <Feather name="edit" size={20} color="white" />
             </View>
@@ -141,6 +153,15 @@ export default function UserScreen() {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
       </Animatable.View>
+      {
+        <ImagePickers
+          setShowImagePicker={setShowImagePicker}
+          showImagePicker={showImagePicker}
+        />
+      }
+      {/* {showImagePicker && (
+        <ImagePickers onImageSelected={handleImageSelection} />
+      )} */}
     </SafeAreaView>
   );
 }
