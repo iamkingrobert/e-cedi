@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Image, SafeAreaView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, Button, Alert, SafeAreaView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Text } from "react-native";
+import * as FileSystem from "expo-file-system";
+import { TouchableOpacity } from "react-native";
+import { storage } from "../config/firebase";
 
-export default function ImagePickers({ image, setImage }) {
+export default function ImagePickerExample() {
+  const [image, setImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(false);
+  //const userId = getAuth().currentUser.uid;
+
+  const getPermissions = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions to make this work!");
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Allow access to your camera roll please");
-        }
-      }
-    })();
+    getPermissions();
   }, []);
 
   const pickImage = async () => {
@@ -21,38 +26,61 @@ export default function ImagePickers({ image, setImage }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.5,
-      base64: true,
+      quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.base64);
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const source = { uri: result.assets[0].uri };
+      setImage(source);
     }
   };
 
-  const imageView = () => {
-    if (image) {
-      return (
-        <Image
-          source={{
-            uri: "data:image/jpeg;base64," + image,
-          }}
-          style={{ height: 30, width: 30, borderRadius: 5 }}
-        />
+  const uploadImage = async () => {
+    setProfileImage(true);
+    const fileInfo = await FileSystem.getInfoAsync(image.uri);
+    const blob = await FileSystem.readAsStringAsync(fileInfo.uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const fileName = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    const storageRef = storage.ref();
+    const imageRef = storageRef.child(fileName);
+
+    try {
+      const snapshot = await imageRef.putString(blob, "base64");
+      const downloadURL = await snapshot.ref.getDownloadURL();
+
+      setProfileImage(false);
+      Alert.alert("Photo Upload Successful");
+      setImage(null);
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Error occurred while uploading the image. Please try again."
       );
+      setProfileImage(false);
     }
   };
 
   return (
-    <SafeAreaView className="bg-white flex-1">
+    <SafeAreaView
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    >
+      <Button title="Pick an image from the camera roll" onPress={pickImage} />
+      {image && (
+        <Image
+          source={{ uri: image.uri }}
+          style={{ width: 200, height: 200 }}
+        />
+      )}
+
       <TouchableOpacity
-        className="items-center justify-center mt-[650px]"
-        onPress={pickImage}
+        className="mt-7 items-center justify-center"
+        onPress={uploadImage}
       >
-        <View className="justify-center items-center bg-black h-12 w-[180px] rounded-[20px]">
-          <Text className="text-white text-[20px]">Select Image</Text>
+        <View>
+          <Text className="text-sm text-black">Set Profile Image</Text>
         </View>
-        {imageView()}
       </TouchableOpacity>
     </SafeAreaView>
   );

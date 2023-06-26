@@ -43,7 +43,7 @@ export default function SignUpScreen() {
             tel,
             email,
             balance: defaultBalance,
-            image: defaultImage,
+            userImage: defaultImage,
           });
         })
         .catch((error) => {

@@ -17,6 +17,7 @@ import { getAuth } from "firebase/auth";
 import app from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
+import Payment from "../components/Payment";
 
 export default function DashboardScreen({ route }) {
   const auth = getAuth(app);
@@ -90,10 +91,16 @@ export default function DashboardScreen({ route }) {
       </View>
 
       {/* USER PORTFOLIO INTEREST */}
-      <View className="mt-6 ml-8">
-        <Text className="text-black text-[25px] font-medium pl-3">2.35%</Text>
+      <View className="mt-6 ml-8 flex-row">
+        <Text className="text-black text-[25px] font-medium pl-3">
+          {Math.floor((2000 / balance) * 100)}%
+        </Text>
+        <Text className=" text-[16px] pl-2 pt-2">Cashflow</Text>
+      </View>
+
+      <View className="ml-8">
         <Text className="text-gray-500 text-[15px] pl-3 pt-1">
-          portfolio growth today
+          {firstName} portfolio growth
         </Text>
       </View>
 
