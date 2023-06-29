@@ -17,7 +17,7 @@ import { getAuth } from "firebase/auth";
 import app from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
-import Payment from "../components/Payment";
+import MoneyTransferModal from "../components/UserToUser";
 
 export default function DashboardScreen({ route }) {
   const auth = getAuth(app);
@@ -26,6 +26,7 @@ export default function DashboardScreen({ route }) {
   const docRef = doc(db, "users", userId);
   const [firstName, setFirstName] = useState();
   const [balance, setBalance] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   // NAVIGATION CONTROL
   const navigation = useNavigation();
@@ -62,6 +63,11 @@ export default function DashboardScreen({ route }) {
       headerShown: false,
     });
   }, []);
+
+  // Handler function to open the modal
+  const handleSendMoney = () => {
+    setOpenModal(true);
+  };
 
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
@@ -132,7 +138,7 @@ export default function DashboardScreen({ route }) {
 
       {/* SEND MONEY BUTTON*/}
       <TouchableOpacity
-        onPress={() => navigation.navigate("TopUpScreen")}
+        onPress={handleSendMoney}
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
@@ -144,6 +150,12 @@ export default function DashboardScreen({ route }) {
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
+
+        {/* Money Transfer Modal */}
+        <MoneyTransferModal
+          visible={openModal} // Pass the visibility state variable to the modal component
+          onClose={() => setOpenModal(false)} // Define a function to close the modal
+        />
       </TouchableOpacity>
 
       {/* INVEST MONEY BUTTON*/}
