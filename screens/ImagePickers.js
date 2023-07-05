@@ -67,7 +67,7 @@ export default function ImagePickerExample() {
         onPress={uploadImage}
       >
         <View>
-          <Text className="text-sm text-black">Set Profile Image</Text>
+          <Text className="text-sm text-black">Update Profile Image</Text>
         </View>
       </TouchableOpacity>
     </SafeAreaView>

@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, Image } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
@@ -8,11 +8,12 @@ import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { getAuth, signOut } from "firebase/auth";
-import app from "../config/firebase";
+import app, { storage } from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
 import ImagePickers from "../screens/ImagePickers";
+import { getDownloadURL, ref } from "firebase/storage";
 
 export default function UserScreen() {
   // NAVIGATION CONTROL
@@ -37,19 +38,40 @@ export default function UserScreen() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
+  const [userPhoto, setUserPhoto] = useState();
 
   useEffect(() => {
     const getData = async () => {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setFirstName(docSnap.data().firstName);
-        setLastName(docSnap.data().lastName);
-        setEmail(docSnap.data().email);
-      } else {
-        // docSnap.data() will be undefined in this case
-        // console.log("No such document!");
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setFirstName(docSnap.data().firstName);
+          setLastName(docSnap.data().lastName);
+          setEmail(docSnap.data().email);
+
+          const user = auth.currentUser;
+          if (user && user.photoURL) {
+            setUserPhoto(user.photoURL);
+          } else {
+            // User does not have a photoURL set, you can handle this case accordingly
+          }
+
+          const userId = auth.currentUser.uid;
+          const storagePath = `images/${userId}/${userId}.jpg`;
+
+          // Retrieve the user's profile photo from Firebase Storage
+          const storageRef = ref(storage, storagePath);
+          const downloadURL = await getDownloadURL(storageRef);
+
+          // Set the userPhoto state with the download URL
+          setUserPhoto(downloadURL);
+        }
+      } catch (error) {
+        // Handle the Promise rejection error here
+        console.error("Error fetching data:", error);
       }
     };
+
     getData();
   }, []);
 
@@ -83,7 +105,11 @@ export default function UserScreen() {
             </View>
           </TouchableOpacity>
           <View className="mt-2 items-center justify-center">
-            <FontAwesome name="user-circle-o" size={40} color="white" />
+            <Image
+              source={{ uri: userPhoto }}
+              className="h-10 w-10 rounded-full"
+            />
+            {/* <FontAwesome name="user-circle-o" size={40} color="white" /> */}
           </View>
           <Text className="text-[20px] font-semibold text-white pt-4 ">
             {firstName} {lastName}

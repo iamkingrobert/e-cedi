@@ -3,7 +3,7 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  Pressable,
+  Image,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -14,10 +14,11 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { getAuth } from "firebase/auth";
-import app from "../config/firebase";
+import app, { storage } from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import MoneyTransferModal from "../components/UserToUser";
+import { getDownloadURL, ref } from "firebase/storage";
 
 export default function DashboardScreen({ route }) {
   const auth = getAuth(app);
@@ -27,6 +28,7 @@ export default function DashboardScreen({ route }) {
   const [firstName, setFirstName] = useState();
   const [balance, setBalance] = useState(0);
   const [openModal, setOpenModal] = useState(false);
+  const [userPhoto, setUserPhoto] = useState();
 
   // NAVIGATION CONTROL
   const navigation = useNavigation();
@@ -39,15 +41,35 @@ export default function DashboardScreen({ route }) {
 
   useEffect(() => {
     const getData = async () => {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setFirstName(docSnap.data().firstName);
-        setBalance(docSnap.data().balance || 0);
-      } else {
-        // docSnap.data() will be undefined in this case
-        // console.log("No such document!");
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setFirstName(docSnap.data().firstName);
+          setBalance(docSnap.data().balance || 0);
+
+          const user = auth.currentUser;
+          if (user && user.photoURL) {
+            setUserPhoto(user.photoURL);
+          } else {
+            // User does not have a photoURL set, you can handle this case accordingly
+          }
+
+          const userId = auth.currentUser.uid;
+          const storagePath = `images/${userId}`;
+
+          // Retrieve the user's profile photo from Firebase Storage
+          const storageRef = ref(storage, storagePath);
+          const downloadURL = await getDownloadURL(storageRef);
+
+          // Set the userPhoto state with the download URL
+          setUserPhoto(downloadURL);
+        }
+      } catch (error) {
+        // Handle the Promise rejection error here
+        console.error("Error fetching data:", error);
       }
     };
+
     getData();
   }, []);
 
@@ -75,8 +97,13 @@ export default function DashboardScreen({ route }) {
       <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
         <View className="flex-row space-x-[242px] justify-center mt-1">
           <View className="flex-row space-x-1">
-            <FontAwesome name="user-circle-o" size={27} color="black" />
-            <Text className="pt-1 text-[15px] font-semibold">
+            <Image
+              source={{ uri: userPhoto }}
+              className="h-10 w-10 rounded-full"
+            />
+
+            {/* <FontAwesome name="user-circle-o" size={27} color="black" /> */}
+            <Text className="pt-3 text-[15px] font-semibold">
               Hey {firstName}
             </Text>
           </View>
