@@ -57,7 +57,7 @@ export default function UserScreen() {
           }
 
           const userId = auth.currentUser.uid;
-          const storagePath = `images/${userId}/${userId}.jpg`;
+          const storagePath = `images/${userId}`;
 
           // Retrieve the user's profile photo from Firebase Storage
           const storageRef = ref(storage, storagePath);
@@ -96,26 +96,25 @@ export default function UserScreen() {
         <Text className="text-[18px] text-black font-semibold">PROFILE</Text>
       </View>
       <View className="justify-center items-center">
-        <View className="mt-10 bg-black w-[350px] h-40 items-center rounded-[15px]">
+        <View className="mt-10 bg-black w-[350px] h-44 items-center rounded-[15px]">
           <TouchableOpacity
             onPress={() => navigation.navigate("Update Profile")}
           >
-            <View className="ml-[310px] mt-2">
+            <View className="ml-[310px] pt-1">
               <Feather name="edit" size={20} color="white" />
             </View>
           </TouchableOpacity>
-          <View className="mt-2 items-center justify-center">
+          <View className="items-center justify-center border border-white rounded-full">
             <Image
               source={{ uri: userPhoto }}
-              className="h-10 w-10 rounded-full"
+              className="h-16 w-16 rounded-full"
             />
-            {/* <FontAwesome name="user-circle-o" size={40} color="white" /> */}
           </View>
-          <Text className="text-[20px] font-semibold text-white pt-4 ">
+          <Text className="text-[21px] font-semibold text-white pt-3 ">
             {firstName} {lastName}
           </Text>
-          <Text className="text-[14px] font-semibold text-gray-200 pt-2 text-center">
-            {email}
+          <Text className="text-[14px] font-semibold text-gray-300 pt-2 text-center">
+            Email: {email}
           </Text>
         </View>
       </View>
@@ -170,7 +169,7 @@ export default function UserScreen() {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-[120px] items-center justify-center space-x-1"
+        className="flex-row px-6 mt-[110px] items-center justify-center space-x-1"
       >
         <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
           <Text className="text-white text-[16px] font-semibold text-center">

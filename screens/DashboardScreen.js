@@ -93,23 +93,28 @@ export default function DashboardScreen({ route }) {
 
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
-      {/* NOTIFICATION & USER ICONS */}
-      <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
-        <View className="flex-row space-x-[242px] justify-center mt-1">
-          <View className="flex-row space-x-1">
-            <Image
-              source={{ uri: userPhoto }}
-              className="h-10 w-10 rounded-full"
-            />
+      {/* LOGGED-IN USER IMAGE & NAME HERE */}
+      <View className="flex-row space-x-[242px] justify-center ">
+        <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
+          <View className="justify-center ">
+            <View className="flex-row space-x-1">
+              <Image
+                source={{ uri: userPhoto }}
+                className="h-14 w-14 rounded-full"
+              />
 
-            {/* <FontAwesome name="user-circle-o" size={27} color="black" /> */}
-            <Text className="pt-3 text-[15px] font-semibold">
-              Hey {firstName}
-            </Text>
+              {/* <FontAwesome name="user-circle-o" size={27} color="black" /> */}
+              <Text className="self-center text-[15px] font-semibold">
+                Hey {firstName}
+              </Text>
+            </View>
           </View>
+        </TouchableOpacity>
+        {/* NOTIFICATION ICONS HERE BELOW */}
+        <View className="items-center justify-center">
           <Ionicons name="notifications" size={27} color="black" />
         </View>
-      </TouchableOpacity>
+      </View>
 
       {/* USER ACCOUNT BALANCE */}
       <View className="items-center justify-center">
@@ -244,7 +249,7 @@ export default function DashboardScreen({ route }) {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-14 items-center justify-center space-x-1"
+        className="flex-row px-6 mt-10 items-center justify-center space-x-1"
       >
         <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
           <Text className="text-white text-[16px] font-semibold text-center">
