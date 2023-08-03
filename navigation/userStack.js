@@ -6,6 +6,7 @@ import TopUpScreen from "../screens/TopUpScreen";
 import UserScreen from "../screens/UserScreen";
 import SignOnScreen from "../screens/SignOnScreen";
 import ImagePickers from "../screens/ImagePickers";
+import InvestmentScreen from "../screens/InvestmentScreen";
 const Stack = createNativeStackNavigator();
 
 export default function userStack() {
@@ -17,6 +18,7 @@ export default function userStack() {
         <Stack.Screen name="TopUpScreen" component={TopUpScreen} />
         <Stack.Screen name="SignOnScreen" component={SignOnScreen} />
         <Stack.Screen name="Update Profile" component={ImagePickers} />
+        <Stack.Screen name="Investment" component={InvestmentScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

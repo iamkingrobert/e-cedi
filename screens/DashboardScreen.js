@@ -94,7 +94,7 @@ export default function DashboardScreen({ route }) {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* LOGGED-IN USER IMAGE & NAME HERE */}
-      <View className="flex-row space-x-[242px] justify-center ">
+      <View className="flex-row space-x-[210px] justify-center ">
         <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
           <View className="justify-center ">
             <View className="flex-row space-x-1">
@@ -151,7 +151,7 @@ export default function DashboardScreen({ route }) {
           <View className="mt-4 ml-5">
             <FontAwesome5 name="money-check" size={25} color="black" />
           </View>
-          <Text className=" text-black text-[17px] pl-3 pt-5 ">Add Money</Text>
+          <Text className=" text-black text-[17px] pl-3 pt-5 ">Top Up</Text>
         </View>
         {/* {showModal &&  <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>} */}
       </TouchableOpacity>
@@ -192,7 +192,7 @@ export default function DashboardScreen({ route }) {
 
       {/* INVEST MONEY BUTTON*/}
       <TouchableOpacity
-        onPress={() => navigation.navigate("Invest Screen HERE")}
+        onPress={() => navigation.navigate("Investment")}
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
