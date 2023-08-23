@@ -82,14 +82,6 @@ export default function UserScreen() {
     });
   }, []);
 
-  //const handleImageSelection = (selectedImage) => {
-  // Do something with the selected image
-  // For example, you can upload it to a server or update the user's profile picture
-  // console.log(selectedImage);
-  // Update the state or perform any necessary actions
-  // setShowImagePicker(false);
-  // };
-
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       <View className="items-center justify-center mt-6">
@@ -105,10 +97,14 @@ export default function UserScreen() {
             </View>
           </TouchableOpacity>
           <View className="items-center justify-center border border-white rounded-full">
-            <Image
-              source={{ uri: userPhoto }}
-              className="h-16 w-16 rounded-full"
-            />
+            {userPhoto ? (
+              <Image
+                source={{ uri: userPhoto }}
+                className="h-16 w-16 rounded-full"
+              />
+            ) : (
+              <FontAwesome name="user-circle-o" size={35} color="white" />
+            )}
           </View>
           <Text className="text-[21px] font-semibold text-white pt-3 ">
             {firstName} {lastName}
@@ -120,7 +116,7 @@ export default function UserScreen() {
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate("DashboardScreen")}>
-        <View className="flex-row mt-20 space-x-3 ml-5">
+        <View className="flex-row mt-20 space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <AntDesign name="appstore-o" size={27} color="white" />
           </View>
@@ -129,34 +125,36 @@ export default function UserScreen() {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <View className="flex-row mt-8 space-x-3 ml-5">
+        <View className="flex-row mt-8 space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <FontAwesome5 name="money-check" size={27} color="white" />
           </View>
-          <Text className="text-[22px] pt-1">Transaction History</Text>
+          <Text className="text-[22px] pt-3">Transaction History</Text>
+          <Text className="text-[12px]  pt-4">Coming Soon</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <View className="flex-row mt-8 space-x-3 ml-5">
+      <TouchableOpacity onPress={() => navigation.navigate("Investment")}>
+        <View className="flex-row mt-8 space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <FontAwesome name="line-chart" size={27} color="white" />
           </View>
-          <Text className="text-[22px]  pt-3">Portfolio Growth</Text>
+          <Text className="text-[22px]  pt-3">Investment Growth</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <View className="flex-row mt-8 space-x-3 ml-5">
+        <View className="flex-row mt-8 space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <Entypo name="trophy" size={27} color="white" />
           </View>
           <Text className="text-[22px]  pt-3">Rewards</Text>
+          <Text className="text-[12px]  pt-4">Coming Soon</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleSignout}>
-        <View className="flex-row mt-8 space-x-3 ml-6">
+        <View className="flex-row mt-8 space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <Entypo name="log-out" size={27} color="white" />
           </View>
@@ -169,14 +167,14 @@ export default function UserScreen() {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-[110px] items-center justify-center space-x-1"
+        className="flex-row px-6 mt-[40px] items-center justify-center space-x-1"
       >
-        <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
-          <Text className="text-white text-[16px] font-semibold text-center">
+        <View className=" w-5 h-5 bg-black rounded-full items-center justify-center">
+          <Text className="text-white text-[12px] font-semibold text-center">
             e
           </Text>
         </View>
-        <Text className="text-black text-[18px] font-semibold">CEDI</Text>
+        <Text className="text-black text-[14px] font-semibold">CEDI</Text>
       </Animatable.View>
       {
         <ImagePickers
@@ -184,9 +182,6 @@ export default function UserScreen() {
           showImagePicker={showImagePicker}
         />
       }
-      {/* {showImagePicker && (
-        <ImagePickers onImageSelected={handleImageSelection} />
-      )} */}
     </SafeAreaView>
   );
 }

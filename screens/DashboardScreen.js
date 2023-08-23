@@ -73,12 +73,6 @@ export default function DashboardScreen({ route }) {
     getData();
   }, []);
 
-  // TOPUP MODAL CONTROL
-  // const [showModal, setShowModal] = useState(false);
-
-  // SEND MONEY MODAL CONTROL
-  // const [openModal, setOpenModal] = useState(false);
-
   // Hide HEADER HERE
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -98,12 +92,15 @@ export default function DashboardScreen({ route }) {
         <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
           <View className="justify-center ">
             <View className="flex-row space-x-1">
-              <Image
-                source={{ uri: userPhoto }}
-                className="h-14 w-14 rounded-full"
-              />
+              {userPhoto ? (
+                <Image
+                  source={{ uri: userPhoto }}
+                  className="h-14 w-14 rounded-full"
+                />
+              ) : (
+                <FontAwesome name="user-circle-o" size={27} color="black" />
+              )}
 
-              {/* <FontAwesome name="user-circle-o" size={27} color="black" /> */}
               <Text className="self-center text-[15px] font-semibold">
                 Hey {firstName}
               </Text>
@@ -118,11 +115,11 @@ export default function DashboardScreen({ route }) {
 
       {/* USER ACCOUNT BALANCE */}
       <View className="items-center justify-center">
-        <View className=" mt-12 bg-black w-[350px] h-32 items-center rounded-[15px]">
+        <View className=" mt-[39px] bg-black w-[350px] h-32 items-center rounded-[15px]">
           <Text className="text-white text-[17px] pt-5">Total Balance</Text>
           <Text className="text-white text-[18px] pt-4 font-semibold">
-            {balance}
-            <Text className="text-[14px] text-gray-50">.00</Text>
+            GH₵ {balance}
+            <Text className="text-[14px] text-gray-50">.95</Text>
           </Text>
           <Text className="text-white text-[20px]">...</Text>
         </View>
@@ -153,7 +150,6 @@ export default function DashboardScreen({ route }) {
           </View>
           <Text className=" text-black text-[17px] pl-3 pt-5 ">Top Up</Text>
         </View>
-        {/* {showModal &&  <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>} */}
       </TouchableOpacity>
 
       {/* SEND OR INVEST MONEY*/}
@@ -216,7 +212,10 @@ export default function DashboardScreen({ route }) {
             <FontAwesome name="money" size={25} color="black" />
           </View>
           <Text className=" text-black text-[16px] pl-3 pt-5 ">Pay Bills</Text>
-          <View className="mt-5 ml-[230px] ">
+          <Text className=" text-black text-[10px] pl-2 text-center pt-5 ">
+            Coming Soon
+          </Text>
+          <View className="mt-5 ml-[158px] ">
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
@@ -238,7 +237,10 @@ export default function DashboardScreen({ route }) {
           <Text className=" text-black text-[16px] pl-3 pt-5 ">
             Cash Withdraw
           </Text>
-          <View className="mt-5 ml-[183px] ">
+          <Text className=" text-black text-[10px] pl-2 text-center pt-5 ">
+            Coming Soon
+          </Text>
+          <View className="mt-5 ml-[109px] ">
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
@@ -258,8 +260,6 @@ export default function DashboardScreen({ route }) {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
       </Animatable.View>
-      {/* <AddMoneyModal setShowModal={setShowModal} showModal={showModal}/>
-    <SendMoney setOpenModal={setOpenModal} openModal={openModal}/> */}
     </SafeAreaView>
   );
 }

@@ -35,6 +35,7 @@ export default function SignUpScreen() {
           const user = userCredential.user;
           const userId = user.uid;
           const defaultBalance = 0;
+          const investmentBalance = 0;
           //Set User Profile Image Here
           const defaultImage = "";
           setDoc(doc(db, "users", userId), {
@@ -43,6 +44,7 @@ export default function SignUpScreen() {
             tel,
             email,
             balance: defaultBalance,
+            investBalance: investmentBalance,
             userImage: defaultImage,
           });
         })

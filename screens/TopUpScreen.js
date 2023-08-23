@@ -22,6 +22,8 @@ import app, { storage } from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
+import { MaterialIcons } from "@expo/vector-icons";
+import Paystack from "../assets/Paystack.png";
 
 export default function TopUpScreen() {
   const auth = getAuth(app);
@@ -88,21 +90,24 @@ export default function TopUpScreen() {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* NOTIFICATION & USER ICONS */}
-      <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
-        <View className="flex-row space-x-[210px] justify-center mt-1">
-          <View className="flex-row space-x-1">
-            <Image
-              source={{ uri: userPhoto }}
-              className="h-14 w-14 rounded-full"
-            />
-            <Text className="self-center text-[15px] font-semibold">
-              Hey {firstName}
-            </Text>
+      <View className="flex-row space-x-[280px] justify-center mt-1">
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DashboardScreen")}
+        >
+          <View className="mt-2">
+            <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
           </View>
-
-          <Ionicons name="notifications" size={27} color="black" />
+        </TouchableOpacity>
+        <View>
+          <Image
+            source={Paystack}
+            className=" h-[50px] w-[50px] rounded-full"
+          />
         </View>
-      </TouchableOpacity>
+      </View>
+      {/* <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
+       
+      </TouchableOpacity> */}
 
       <Animatable.View
         iterationCount={"infinite"}
@@ -186,11 +191,18 @@ export default function TopUpScreen() {
       </View>
 
       {/*Top-Up Title*/}
-      <View className="mt-12 ml-3 flex-row space-x-1">
-        <View className="ml-7">
-          <FontAwesome name="arrow-circle-down" size={24} color="black" />
+
+      <View className="flex-row space-x-[120px] mt-12 ">
+        <View className="ml-3 flex-row space-x-1">
+          <View className="ml-7">
+            <FontAwesome name="arrow-circle-down" size={24} color="black" />
+          </View>
+          <Text className="text-[14px] text-black pt-1">Debit Card Topup</Text>
         </View>
-        <Text className="text-[14px] text-gray-500 pt-1">Debit Card Topup</Text>
+
+        <View className="mt-1">
+          <Text className=" text-gray-500 text-[13px]">Coming Soon</Text>
+        </View>
       </View>
 
       {/* e-Cedi Credit Card Topup */}
@@ -245,30 +257,6 @@ export default function TopUpScreen() {
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
       </Animatable.View>
       {/* <Payment setTriggerTransaction={setTriggerTransaction} triggerTransaction={triggerTransaction}/> */}
-
-      {/* <BottomModal onBackdropPress={()=> setModalVisible(!modalVisible) } swipeDirection={['up', 'down']} swipeThreshold={200} footer={<ModalFooter>
-      <Pressable className="pr-10 ml-auto mr-auto mx-10">
-      <Text>Top Up</Text>
-      </Pressable>
-    </ModalFooter>}
-    modalTitle={<ModdalTitle title="Load Your Wallet"/>}
-    modalAnimation={
-      new SlideAnimation({
-         slideFrom: 'buttom'
-      })
-      }
-      onHardwareBackPress={() => setModalVisible(!modalVisible)}
-      visible={modalVisible}
-      onTouchOutside={()=> setModalVisible(!modalVisible)}
-    >
-    <ModalContent className='w-[100%] h-[280px]'>
-    <View>
-      <View>
-
-      </View>
-    </View>
-    </ModalContent>
-    </BottomModal> */}
     </SafeAreaView>
   );
 }

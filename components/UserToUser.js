@@ -1,39 +1,71 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
-import firebase from "../config/firebase";
+import { getAuth } from "firebase/auth";
+import { app, firestore } from "../config/firebase";
+import * as Animatable from "react-native-animatable";
+
+import {
+  doc,
+  getFirestore,
+  updateDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  getDocs,
+  getDoc,
+} from "firebase/firestore";
 
 const MoneyTransferModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
   const [transactionComplete, setTransactionComplete] = useState(false);
+  const auth = getAuth(app);
+  const db = getFirestore();
+  const userId = getAuth().currentUser.uid;
+  const userRef = doc(db, "users", userId);
+  const receiverRef = collection(firestore, "users");
+  // const RecieverRef = collection(db, "users");
 
-  const handleTransfer = () => {
-    // Update sender's balance
-    const senderEmail = firebase.auth().currentUser.email;
-    firebase
-      .database()
-      .ref(`users/${senderEmail}/balance`)
-      .transaction(
-        (currentBalance) => (currentBalance || 0) - parseFloat(amount)
-      );
+  const handleTransfer = async () => {
+    try {
+      const senderEmail = auth.currentUser.email;
+      // Convert the amount to a number
+      const transferAmount = parseFloat(amount);
 
-    // Update receiver's balance
-    firebase
-      .database()
-      .ref(`users/${email}/balance`)
-      .transaction(
-        (currentBalance) => (currentBalance || 0) + parseFloat(amount)
-      );
+      // Fetch sender's current balance
+      const userSnapshot = await getDoc(userRef);
+      const currentBalance = userSnapshot.data().balance;
 
-    // Show transaction complete message
-    setTransactionComplete(true);
+      // Update sender's balance
+      const updatedSenderBalance = currentBalance - parseFloat(amount);
+      await updateDoc(userRef, { balance: updatedSenderBalance });
 
-    // Close the modal after a delay
-    setTimeout(() => {
-      onClose();
-      setTransactionComplete(false);
-    }, 2000);
+      // Fetch receiver's current balance
+      const q = query(receiverRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+      const receiverSnapshot = querySnapshot.docs[0];
+      const receiverDocRef = doc(db, "users", receiverSnapshot.id);
+      const receiverCurrentBalance = receiverSnapshot.data().balance;
+
+      // Update receiver's balance
+      const updatedReceiverBalance = receiverCurrentBalance + transferAmount;
+      await updateDoc(receiverDocRef, { balance: updatedReceiverBalance });
+
+      // Show transaction complete message
+      setTransactionComplete(true);
+
+      // Close the modal after a delay
+      setTimeout(() => {
+        onClose();
+        setTransactionComplete(false);
+        setAmount(""); // Reset the amount input field
+        setEmail(""); // Reset the email input field
+      }, 2000);
+    } catch (error) {
+      console.error("Error transferring money:", error);
+    }
   };
 
   return (
@@ -56,11 +88,26 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           height: "40%",
         }}
       >
+        <Animatable.View
+          iterationCount={"infinite"}
+          animation={""}
+          easing="ease-in-out"
+          className="flex-row px-6 mt-2 items-center justify-center space-x-1"
+        >
+          <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
+            <Text className="text-white text-[16px] font-semibold text-center">
+              e
+            </Text>
+          </View>
+          <Text className="text-black text-[17px] font-semibold">CEDI</Text>
+        </Animatable.View>
+
         <TextInput
           placeholder="Amount"
           value={amount}
           onChangeText={(text) => setAmount(text)}
           keyboardType="numeric"
+          autoFocus={true}
           style={{
             backgroundColor: "gray-rgb(255,255,255)",
             width: 340,
@@ -78,8 +125,8 @@ const MoneyTransferModal = ({ visible, onClose }) => {
         <TextInput
           placeholder="Recipient Email"
           value={email}
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
+          onChangeText={(email) => setEmail(email)}
+          keyboardType="numeric"
           style={{
             backgroundColor: "gray-rgb(255,255,255)",
             width: 340,
@@ -99,10 +146,6 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           <Text className="text-[18px] text-black ">Transfer Money</Text>
         </TouchableOpacity>
 
-        {/* <Button title="Transfer" onPress={handleTransfer} color="black" /> */}
-
-        {/* <Button title="Cancel" onPress={onClose} color="black" /> */}
-
         <TouchableOpacity
           onPress={onClose}
           className="items-center justify-center mt-3"
@@ -110,7 +153,9 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           <Text className="text-[18px] text-gray-500 font-medium">Cancel</Text>
         </TouchableOpacity>
 
-        {transactionComplete && <Text>Transaction Complete!</Text>}
+        {transactionComplete && (
+          <Text className="text-center">Transaction Complete!</Text>
+        )}
       </View>
     </Modal>
   );
