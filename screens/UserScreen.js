@@ -116,7 +116,7 @@ export default function UserScreen() {
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate("DashboardScreen")}>
-        <View className="flex-row mt-20 space-x-3 ml-4">
+        <View className="flex-row mt-[70px] space-x-3 ml-4">
           <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
             <AntDesign name="appstore-o" size={27} color="white" />
           </View>
@@ -167,7 +167,7 @@ export default function UserScreen() {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-[40px] items-center justify-center space-x-1"
+        className="flex-row px-6 mt-[28px] items-center justify-center space-x-1"
       >
         <View className=" w-5 h-5 bg-black rounded-full items-center justify-center">
           <Text className="text-white text-[12px] font-semibold text-center">

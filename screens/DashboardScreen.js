@@ -88,9 +88,9 @@ export default function DashboardScreen({ route }) {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* LOGGED-IN USER IMAGE & NAME HERE */}
-      <View className="flex-row space-x-[210px] justify-center ">
+      <View className="flex-row space-x-[200px] justify-center ">
         <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
-          <View className="justify-center ">
+          <View className="justify-center mt-1">
             <View className="flex-row space-x-1">
               {userPhoto ? (
                 <Image
@@ -108,7 +108,7 @@ export default function DashboardScreen({ route }) {
           </View>
         </TouchableOpacity>
         {/* NOTIFICATION ICONS HERE BELOW */}
-        <View className="items-center justify-center">
+        <View className="items-center justify-center right-1">
           <Ionicons name="notifications" size={27} color="black" />
         </View>
       </View>
@@ -157,7 +157,7 @@ export default function DashboardScreen({ route }) {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="justify-center mt-12 ml-3"
+        className="justify-center mt-10 ml-3"
       >
         <Text className="text-[19px] text-black pl-4">
           Send, invest money on the go
@@ -169,7 +169,7 @@ export default function DashboardScreen({ route }) {
         onPress={handleSendMoney}
         className="items-center justify-center"
       >
-        <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
+        <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-4 flex-row ">
           <View className="mt-4 ml-5">
             <Feather name="send" size={25} color="black" />
           </View>

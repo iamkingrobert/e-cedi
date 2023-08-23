@@ -101,7 +101,7 @@ export default function SignUpScreen() {
       </Animatable.View>
 
       {/* FORM TITLE */}
-      <View className="mb-4 mt-36 ml-8">
+      <View className="mb-4 mt-[125px] ml-8">
         <Text className="text-3xl font-semibold">Create Account</Text>
       </View>
 

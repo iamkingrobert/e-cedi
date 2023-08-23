@@ -90,24 +90,21 @@ export default function TopUpScreen() {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* NOTIFICATION & USER ICONS */}
-      <View className="flex-row space-x-[280px] justify-center mt-1">
+      <View className="flex-row space-x-[275px] justify-center mt-1">
         <TouchableOpacity
           onPress={() => navigation.navigate("DashboardScreen")}
         >
-          <View className="mt-2">
+          <View className="mt-2 right-1">
             <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
           </View>
         </TouchableOpacity>
         <View>
           <Image
             source={Paystack}
-            className=" h-[50px] w-[50px] rounded-full"
+            className=" h-[50px] w-[50px] rounded-full right-1"
           />
         </View>
       </View>
-      {/* <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
-       
-      </TouchableOpacity> */}
 
       <Animatable.View
         iterationCount={"infinite"}
@@ -121,8 +118,8 @@ export default function TopUpScreen() {
       </Animatable.View>
 
       {/*Top-Up Title*/}
-      <View className="mt-12 ml-3 flex-row space-x-1">
-        <View className="ml-7">
+      <View className="mt-12  flex-row space-x-1">
+        <View className="ml-6">
           <FontAwesome name="arrow-circle-down" size={24} color="black" />
         </View>
         <Text className="text-[14px] text-gray-500 pt-1">
@@ -193,7 +190,7 @@ export default function TopUpScreen() {
       {/*Top-Up Title*/}
 
       <View className="flex-row space-x-[120px] mt-12 ">
-        <View className="ml-3 flex-row space-x-1">
+        <View className="flex-row space-x-1">
           <View className="ml-7">
             <FontAwesome name="arrow-circle-down" size={24} color="black" />
           </View>
@@ -201,7 +198,9 @@ export default function TopUpScreen() {
         </View>
 
         <View className="mt-1">
-          <Text className=" text-gray-500 text-[13px]">Coming Soon</Text>
+          <Text className=" text-gray-500 text-[13px] right-2">
+            Coming Soon
+          </Text>
         </View>
       </View>
 
