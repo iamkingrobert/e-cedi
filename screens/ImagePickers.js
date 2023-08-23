@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, Text, Image, Button, SafeAreaView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { TouchableOpacity } from "react-native";
 import { storage } from "../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function ImagePickerExample() {
+  // NAVIGATION CONTROL
+  const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [profileImage, setProfileImage] = useState(false);
   const userId = getAuth().currentUser.uid;
@@ -33,7 +37,6 @@ export default function ImagePickerExample() {
     if (!result.canceled && result.assets && result.assets.length > 0) {
       const source = result.assets[0].uri;
       setImage(source);
-      //console.log(source.split("/").pop());
     }
   };
 
@@ -48,28 +51,58 @@ export default function ImagePickerExample() {
       const url = await getDownloadURL(result.ref);
 
       return url;
-    } catch (err) {
-      // console.log(err);
-    }
+    } catch (err) {}
   };
 
-  return (
-    <SafeAreaView
-      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-    >
-      <Button title="Pick an image from the camera roll" onPress={pickImage} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
+  // Hide HEADER HERE
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, []);
 
-      <TouchableOpacity
-        className="mt-7 items-center justify-center"
-        onPress={uploadImage}
+  return (
+    <SafeAreaView className="flex-1 h-[100%] bg-white">
+      <View className="mx-4">
+        <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
+          <View className="right-1">
+            <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View className="items-center justify-center ">
+        <Text className="text-[18px] text-black font-semibold">
+          PROFILE PHOTO
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <View>
-          <Text className="text-sm text-black">Update Profile Image</Text>
+        <View className="mb-5">
+          <Button
+            title="Pick an image from the camera roll"
+            onPress={pickImage}
+          />
         </View>
-      </TouchableOpacity>
+        {image && (
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        )}
+
+        <TouchableOpacity
+          className="mt-7 items-center justify-center"
+          onPress={uploadImage}
+        >
+          <View className="w-[230px] h-[60px] bg-black border shadow border-gray-100 rounded-full mt-4 flex-row justify-center items-center ">
+            <Text className="text-[16px] text-white text-center">
+              Update Image
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

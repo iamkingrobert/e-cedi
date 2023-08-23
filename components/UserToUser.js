@@ -4,6 +4,8 @@ import Modal from "react-native-modal";
 import { getAuth } from "firebase/auth";
 import { app, firestore } from "../config/firebase";
 import * as Animatable from "react-native-animatable";
+import { useDispatch, useSelector } from "react-redux";
+import { updateBalance } from "../features/balanceSlice";
 
 import {
   doc,
@@ -12,12 +14,14 @@ import {
   collection,
   query,
   where,
-  onSnapshot,
   getDocs,
   getDoc,
 } from "firebase/firestore";
 
 const MoneyTransferModal = ({ visible, onClose }) => {
+  const dispatch = useDispatch();
+  const balance = useSelector((state) => state.balance.balance);
+
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
   const [transactionComplete, setTransactionComplete] = useState(false);
@@ -52,6 +56,9 @@ const MoneyTransferModal = ({ visible, onClose }) => {
       // Update receiver's balance
       const updatedReceiverBalance = receiverCurrentBalance + transferAmount;
       await updateDoc(receiverDocRef, { balance: updatedReceiverBalance });
+
+      // Dispatch the updateBalance action to update Redux state
+      dispatch(updateBalance(transferAmount));
 
       // Show transaction complete message
       setTransactionComplete(true);

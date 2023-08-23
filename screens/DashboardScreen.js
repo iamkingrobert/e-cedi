@@ -88,14 +88,14 @@ export default function DashboardScreen({ route }) {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* LOGGED-IN USER IMAGE & NAME HERE */}
-      <View className="flex-row space-x-[200px] justify-center ">
+      <View className="flex-row space-x-[190px] justify-center ">
         <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
           <View className="justify-center mt-1">
             <View className="flex-row space-x-1">
               {userPhoto ? (
                 <Image
                   source={{ uri: userPhoto }}
-                  className="h-14 w-14 rounded-full"
+                  className="h-12 w-12 rounded-full"
                 />
               ) : (
                 <FontAwesome name="user-circle-o" size={27} color="black" />
@@ -204,7 +204,12 @@ export default function DashboardScreen({ route }) {
 
       {/* PAY BILLS BUTTON*/}
       <TouchableOpacity
-        onPress={() => navigation.navigate("Bill Payment Screen HERE")}
+        onPress={() =>
+          navigation.navigate(
+            "DashboardScreen",
+            alert("e-Cedi Bill Payment Comming Soon")
+          )
+        }
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
@@ -223,7 +228,12 @@ export default function DashboardScreen({ route }) {
 
       {/* ATM WITHDRAWAL BUTTON*/}
       <TouchableOpacity
-        onPress={() => navigation.navigate("Cash Withdraw Screen HERE")}
+        onPress={() =>
+          navigation.navigate(
+            "DashboardScreen",
+            alert("Cash Withdrawal Coming Soon")
+          )
+        }
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">

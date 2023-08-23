@@ -14,6 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
 import ImagePickers from "../screens/ImagePickers";
 import { getDownloadURL, ref } from "firebase/storage";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function UserScreen() {
   // NAVIGATION CONTROL
@@ -84,7 +85,16 @@ export default function UserScreen() {
 
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
-      <View className="items-center justify-center mt-6">
+      <View className="mx-4">
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DashboardScreen")}
+        >
+          <View className="right-1">
+            <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View className="items-center justify-center">
         <Text className="text-[18px] text-black font-semibold">PROFILE</Text>
       </View>
       <View className="justify-center items-center">
@@ -116,49 +126,61 @@ export default function UserScreen() {
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate("DashboardScreen")}>
-        <View className="flex-row mt-[70px] space-x-3 ml-4">
-          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
-            <AntDesign name="appstore-o" size={27} color="white" />
+        <View className="flex-row mt-[90px] space-x-1 mx-4">
+          <View className="bg-black h-8 w-8 rounded-full items-center justify-center">
+            <AntDesign name="appstore-o" size={18} color="white" />
           </View>
-          <Text className="text-[22px] pt-3">Dashboard</Text>
+          <Text className="text-[18px] pt-[7px]">Dashboard</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <View className="flex-row mt-8 space-x-3 ml-4">
-          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
-            <FontAwesome5 name="money-check" size={27} color="white" />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("UserScreen", alert("Feature Coming Soon"))
+        }
+      >
+        <View className="flex-row mt-8 space-x-1 mx-4">
+          <View className="bg-black h-8 w-8 rounded-full items-center justify-center">
+            <FontAwesome5 name="money-check" size={18} color="white" />
           </View>
-          <Text className="text-[22px] pt-3">Transaction History</Text>
-          <Text className="text-[12px]  pt-4">Coming Soon</Text>
+          <Text className="text-[18px] pt-[6px]">Request Statement</Text>
+          <Text className="text-[12px]  pt-[6px] pl-1 text-gray-500 italic">
+            Coming Soon
+          </Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Investment")}>
-        <View className="flex-row mt-8 space-x-3 ml-4">
-          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
-            <FontAwesome name="line-chart" size={27} color="white" />
+        <View className="flex-row mt-8 space-x-1 mx-4">
+          <View className="bg-black h-8 w-8 rounded-full items-center justify-center">
+            <FontAwesome name="line-chart" size={18} color="white" />
           </View>
-          <Text className="text-[22px]  pt-3">Investment Growth</Text>
+          <Text className="text-[18px]  pt-[5px]">My Investment</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("")}>
-        <View className="flex-row mt-8 space-x-3 ml-4">
-          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
-            <Entypo name="trophy" size={27} color="white" />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("UserScreen", alert("Feature Coming Soon"))
+        }
+      >
+        <View className="flex-row mt-8 space-x-1 mx-4">
+          <View className="bg-black h-8 w-8 rounded-full items-center justify-center">
+            <Entypo name="trophy" size={18} color="white" />
           </View>
-          <Text className="text-[22px]  pt-3">Rewards</Text>
-          <Text className="text-[12px]  pt-4">Coming Soon</Text>
+          <Text className="text-[18px]  pt-[6px]">Rewards</Text>
+          <Text className="text-[12px]  pt-[6px] pl-1 text-gray-500 italic">
+            Coming Soon
+          </Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleSignout}>
-        <View className="flex-row mt-8 space-x-3 ml-4">
-          <View className="bg-black h-12 w-12 rounded-full items-center justify-center">
-            <Entypo name="log-out" size={27} color="white" />
+        <View className="flex-row mt-8 space-x-1 mx-4">
+          <View className="bg-black h-8 w-8 rounded-full items-center justify-center">
+            <Entypo name="log-out" size={18} color="white" />
           </View>
-          <Text className="text-[22px]  pt-3">Logout</Text>
+          <Text className="text-[18px] pt-[7px]">Sign-Out</Text>
         </View>
       </TouchableOpacity>
 
@@ -167,7 +189,7 @@ export default function UserScreen() {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="flex-row px-6 mt-[28px] items-center justify-center space-x-1"
+        className="flex-row px-6 mt-[83px] items-center justify-center space-x-1"
       >
         <View className=" w-5 h-5 bg-black rounded-full items-center justify-center">
           <Text className="text-white text-[12px] font-semibold text-center">
@@ -176,12 +198,6 @@ export default function UserScreen() {
         </View>
         <Text className="text-black text-[14px] font-semibold">CEDI</Text>
       </Animatable.View>
-      {
-        <ImagePickers
-          setShowImagePicker={setShowImagePicker}
-          showImagePicker={showImagePicker}
-        />
-      }
     </SafeAreaView>
   );
 }

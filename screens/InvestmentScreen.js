@@ -30,7 +30,7 @@ const InvestmentScreen = () => {
           <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
         </View>
       </TouchableOpacity>
-      <View className="mx-5 mt-3 flex-row space-x-[210px]">
+      <View className="mx-5 mt-3 flex-row space-x-[200px]">
         <Text className="text-start text-[26px] font-semibold">Invest</Text>
         <Animatable.View
           iterationCount={"infinite"}
@@ -57,7 +57,12 @@ const InvestmentScreen = () => {
         <Text className="text-[15px]">Create a new investment plan</Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("")}
+        onPress={() =>
+          navigation.navigate(
+            "Investment",
+            alert("Investment Features Coming Soon")
+          )
+        }
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-8 flex-row ">
@@ -68,13 +73,18 @@ const InvestmentScreen = () => {
             {" "}
             Cedi Mutual Funds
           </Text>
-          <View className="mt-5 ml-[154px] ">
+          <View className="mt-5 ml-[148px] ">
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("")}
+        onPress={() =>
+          navigation.navigate(
+            "Investment",
+            alert("Investment Features Coming Soon")
+          )
+        }
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
@@ -85,12 +95,12 @@ const InvestmentScreen = () => {
             {" "}
             USD Mutual Funds
           </Text>
-          <View className="mt-5 ml-[154px] ">
+          <View className="mt-5 ml-[148px] ">
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
       </TouchableOpacity>
-      <View className="mx-5 mt-[35px] items-start">
+      <View className="mx-5 mt-[25px] items-start">
         <Text className="text-[28px] text-black">Pick</Text>
       </View>
       <View className="mx-5 mt-[8px] flex-row space-x-1 items-center">
@@ -100,14 +110,19 @@ const InvestmentScreen = () => {
         </Text>
       </View>
 
-      <View className="mx-2 space-x-3 flex-row">
+      <View className="justify-center space-x-2 flex-row">
         <Animatable.View
           iterationCount={"infinite"}
           animation={"pulse"}
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("")}
+            onPress={() =>
+              navigation.navigate(
+                "Investment",
+                alert("Investment Features Coming Soon")
+              )
+            }
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -138,7 +153,12 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("")}
+            onPress={() =>
+              navigation.navigate(
+                "Investment",
+                alert("Investment Features Coming Soon")
+              )
+            }
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -161,14 +181,19 @@ const InvestmentScreen = () => {
           </TouchableOpacity>
         </Animatable.View>
       </View>
-      <View className="flex-row mx-2 space-x-3">
+      <View className="flex-row justify-center space-x-2">
         <Animatable.View
           iterationCount={"infinite"}
           animation={"pulse"}
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("")}
+            onPress={() =>
+              navigation.navigate(
+                "Investment",
+                alert("Investment Features Coming Soon")
+              )
+            }
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -199,7 +224,12 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("")}
+            onPress={() =>
+              navigation.navigate(
+                "Investment",
+                alert("Investment Features Coming Soon")
+              )
+            }
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -224,19 +254,6 @@ const InvestmentScreen = () => {
           </TouchableOpacity>
         </Animatable.View>
       </View>
-      {/* <Animatable.View
-        iterationCount={"infinite"}
-        animation={"pulse"}
-        easing="ease-in-out"
-        className="flex-row px-6 mt-[100px] items-center justify-center space-x-1"
-      >
-        <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
-          <Text className="text-white text-[18px] font-semibold text-center">
-            e
-          </Text>
-        </View>
-        <Text className="text-black text-[20px] font-semibold">CEDI</Text>
-      </Animatable.View> */}
     </SafeAreaView>
   );
 };
