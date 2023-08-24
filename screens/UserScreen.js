@@ -12,7 +12,6 @@ import app, { storage } from "../config/firebase";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
-import ImagePickers from "../screens/ImagePickers";
 import { getDownloadURL, ref } from "firebase/storage";
 import { MaterialIcons } from "@expo/vector-icons";
 

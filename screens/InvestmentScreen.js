@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import GhanaCedi from "../assets/GhanaCedi.png";
@@ -12,9 +12,39 @@ import UBA from "../assets/UBANew.png";
 import { Ionicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { MaterialIcons } from "@expo/vector-icons";
+import InvestmentModal from "../components/InvestmentModal";
+import { getAuth } from "firebase/auth";
+import { app, firestore } from "../config/firebase";
+import { doc, getFirestore, updateDoc, getDoc } from "firebase/firestore";
 
 const InvestmentScreen = () => {
   const navigation = useNavigation();
+  const [openModal, setOpenModal] = useState(false);
+
+  const [investBalance, setInvestBalance] = useState(0); // Initialize with 0
+  const auth = getAuth(app);
+  const db = getFirestore();
+  const userId = auth.currentUser.uid;
+  const userRef = doc(db, "users", userId);
+
+  useEffect(() => {
+    // Fetch user's data, including investBalance, when the component mounts
+    const fetchUserData = async () => {
+      try {
+        const userSnapshot = await getDoc(userRef);
+        setInvestBalance(userSnapshot.data().investBalance || 0);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  // Handler function to open the modal
+  const handleInvestment = () => {
+    setOpenModal(true);
+  };
 
   // Hide HEADER HERE
   useLayoutEffect(() => {
@@ -30,20 +60,18 @@ const InvestmentScreen = () => {
           <MaterialIcons name="keyboard-arrow-left" size={32} color="black" />
         </View>
       </TouchableOpacity>
-      <View className="mx-5 mt-3 flex-row space-x-[200px]">
+      <View className="mx-5 mt-2 flex-row space-x-[200px]">
         <Text className="text-start text-[26px] font-semibold">Invest</Text>
         <Animatable.View
           iterationCount={"infinite"}
           animation={"pulse"}
           easing="ease-in-out"
         >
-          <Text className="text-center text-gray-500 text-[12px] top-[10px]">
-            Coming Soon
-          </Text>
+          <Text className="text-center text-gray-500 text-[12px] top-[10px]"></Text>
         </Animatable.View>
       </View>
-      <View className="mx-5 mt-5 flex-row space-x-2 items-center">
-        <Text className="text-start text-[15px] font-medium text-gray-500">
+      <View className="mx-5 mt-[18px] flex-row space-x-2 items-center">
+        <Text className="text-start text-[15px] font-medium text-gray-700">
           Total Investment
         </Text>
         <TouchableOpacity>
@@ -51,21 +79,46 @@ const InvestmentScreen = () => {
         </TouchableOpacity>
       </View>
       <View className="mx-5 mt-2">
-        <Text className="text-[18px]">GH₵ 00.00</Text>
+        <Text className="text-[18px] font-medium">
+          GH₵ {investBalance.toFixed(2)}
+        </Text>
+        <Text className="text-[13px] font-light text-blue-700 pt-1">
+          portfolio interest
+        </Text>
       </View>
-      <View className="mx-5 mt-[60px]">
+      <View className="mx-5 mt-[55px]">
         <Text className="text-[15px]">Create a new investment plan</Text>
       </View>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(
             "Investment",
-            alert("Investment Features Coming Soon")
+            alert("US Dollar Investment Coming Soon")
           )
         }
         className="items-center justify-center"
       >
         <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-8 flex-row ">
+          <View className="mt-3 ml-5">
+            <Image source={USDICON} className="h-9 w-9" />
+          </View>
+          <Text className=" text-black text-[16px] pl-2 pt-5 ">
+            {" "}
+            USD Mutual Funds
+          </Text>
+          <Text className="text-black text-[10px] pl-2 pt-5 ">Coming Soon</Text>
+          <View className="mt-5 ml-[76px] ">
+            <Ionicons name="arrow-forward-circle" size={25} color="black" />
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={handleInvestment}
+        className="items-center justify-center"
+      >
+        <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-3 flex-row ">
           <View className="mt-3 ml-5">
             <Image source={GhanaCedi} className="h-9 w-9" />
           </View>
@@ -77,28 +130,10 @@ const InvestmentScreen = () => {
             <Ionicons name="arrow-forward-circle" size={25} color="black" />
           </View>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate(
-            "Investment",
-            alert("Investment Features Coming Soon")
-          )
-        }
-        className="items-center justify-center"
-      >
-        <View className="w-[380px] h-[60px] bg-[#fff] border shadow border-gray-100 rounded mt-5 flex-row ">
-          <View className="mt-3 ml-5">
-            <Image source={USDICON} className="h-9 w-9" />
-          </View>
-          <Text className=" text-black text-[16px] pl-2 pt-5 ">
-            {" "}
-            USD Mutual Funds
-          </Text>
-          <View className="mt-5 ml-[148px] ">
-            <Ionicons name="arrow-forward-circle" size={25} color="black" />
-          </View>
-        </View>
+        <InvestmentModal
+          visible={openModal} // Pass the visibility state variable to the modal component
+          onClose={() => setOpenModal(false)} // Define a function to close the modal
+        />
       </TouchableOpacity>
       <View className="mx-5 mt-[25px] items-start">
         <Text className="text-[28px] text-black">Pick</Text>
@@ -117,12 +152,7 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(
-                "Investment",
-                alert("Investment Features Coming Soon")
-              )
-            }
+            onPress={handleInvestment}
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -144,6 +174,11 @@ const InvestmentScreen = () => {
                 Star Assurance Life Trust Fund
               </Text>
             </View>
+            {/* Money Transfer Modal */}
+            <InvestmentModal
+              visible={openModal} // Pass the visibility state variable to the modal component
+              onClose={() => setOpenModal(false)} // Define a function to close the modal
+            />
           </TouchableOpacity>
         </Animatable.View>
 
@@ -153,12 +188,7 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(
-                "Investment",
-                alert("Investment Features Coming Soon")
-              )
-            }
+            onPress={handleInvestment}
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -178,6 +208,11 @@ const InvestmentScreen = () => {
                 EcoBank Limited EDC Mutual Fund
               </Text>
             </View>
+            {/* Money Transfer Modal */}
+            <InvestmentModal
+              visible={openModal} // Pass the visibility state variable to the modal component
+              onClose={() => setOpenModal(false)} // Define a function to close the modal
+            />
           </TouchableOpacity>
         </Animatable.View>
       </View>
@@ -188,12 +223,7 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(
-                "Investment",
-                alert("Investment Features Coming Soon")
-              )
-            }
+            onPress={handleInvestment}
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -215,6 +245,10 @@ const InvestmentScreen = () => {
                 UBA Entreprenuers Mutual Fund
               </Text>
             </View>
+            <InvestmentModal
+              visible={openModal} // Pass the visibility state variable to the modal component
+              onClose={() => setOpenModal(false)} // Define a function to close the modal
+            />
           </TouchableOpacity>
         </Animatable.View>
         {/* ...... */}
@@ -224,12 +258,7 @@ const InvestmentScreen = () => {
           easing="ease-in-out"
         >
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(
-                "Investment",
-                alert("Investment Features Coming Soon")
-              )
-            }
+            onPress={handleInvestment}
             className="items-center justify-center bg-[#fff] w-[180px] h-[120px] border shadow border-gray-100 rounded-md mt-4"
           >
             <View className="space-x-20 flex-row justify-start">
@@ -251,6 +280,10 @@ const InvestmentScreen = () => {
                 Guarantee Trust Bank Mutual Fund
               </Text>
             </View>
+            <InvestmentModal
+              visible={openModal} // Pass the visibility state variable to the modal component
+              onClose={() => setOpenModal(false)} // Define a function to close the modal
+            />
           </TouchableOpacity>
         </Animatable.View>
       </View>

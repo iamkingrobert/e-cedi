@@ -69,7 +69,7 @@ const MoneyTransferModal = ({ visible, onClose }) => {
         setTransactionComplete(false);
         setAmount(""); // Reset the amount input field
         setEmail(""); // Reset the email input field
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.error("Error transferring money:", error);
     }

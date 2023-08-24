@@ -51,7 +51,6 @@ export default function DashboardScreen({ route }) {
           if (user && user.photoURL) {
             setUserPhoto(user.photoURL);
           } else {
-            // User does not have a photoURL set, you can handle this case accordingly
           }
 
           const userId = auth.currentUser.uid;
@@ -119,7 +118,7 @@ export default function DashboardScreen({ route }) {
           <Text className="text-white text-[17px] pt-5">Total Balance</Text>
           <Text className="text-white text-[18px] pt-4 font-semibold">
             GH₵ {balance}
-            <Text className="text-[14px] text-gray-50">.95</Text>
+            <Text className="text-[14px] text-gray-50">.00</Text>
           </Text>
           <Text className="text-white text-[20px]">...</Text>
         </View>
