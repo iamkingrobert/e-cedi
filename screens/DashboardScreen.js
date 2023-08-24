@@ -117,8 +117,7 @@ export default function DashboardScreen({ route }) {
         <View className=" mt-[39px] bg-black w-[350px] h-32 items-center rounded-[15px]">
           <Text className="text-white text-[17px] pt-5">Total Balance</Text>
           <Text className="text-white text-[18px] pt-4 font-semibold">
-            GH₵ {balance}
-            <Text className="text-[14px] text-gray-50">.00</Text>
+            GH₵ {balance.toFixed(2)}
           </Text>
           <Text className="text-white text-[20px]">...</Text>
         </View>
@@ -127,7 +126,7 @@ export default function DashboardScreen({ route }) {
       {/* USER PORTFOLIO INTEREST */}
       <View className="mt-6 ml-8 flex-row">
         <Text className="text-black text-[25px] font-medium pl-3">
-          {Math.floor((2000 / balance) * 100)}%
+          {Math.floor((balance / 100) * 0.1)}%
         </Text>
         <Text className=" text-[16px] pl-2 pt-2">Cashflow</Text>
       </View>
