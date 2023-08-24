@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import Modal from "react-native-modal";
 import { getAuth } from "firebase/auth";
 import { app, firestore } from "../config/firebase";
@@ -86,6 +93,9 @@ const MoneyTransferModal = ({ visible, onClose }) => {
         margin: 0,
       }}
     >
+      {/* <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      ></KeyboardAvoidingView>*/}
       <View
         style={{
           backgroundColor: "white",
@@ -133,7 +143,7 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           placeholder="Recipient Email"
           value={email}
           onChangeText={(email) => setEmail(email)}
-          keyboardType="numeric"
+          keyboardType="email-address"
           style={{
             backgroundColor: "gray-rgb(255,255,255)",
             width: 340,

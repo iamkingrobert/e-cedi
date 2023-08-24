@@ -133,6 +133,7 @@ export default function SignUpScreen() {
           placeholder="Email"
           value={email}
           setValue={setEmail}
+          keyboardType="email-address"
           type="email"
           autoCapitalize="none"
         />
