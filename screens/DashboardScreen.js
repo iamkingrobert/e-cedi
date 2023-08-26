@@ -87,7 +87,7 @@ export default function DashboardScreen({ route }) {
   return (
     <SafeAreaView className="flex-1 h-[100%] bg-white">
       {/* LOGGED-IN USER IMAGE & NAME HERE */}
-      <View className="flex-row space-x-[190px] justify-center ">
+      <View className="flex-row space-x-[210px] justify-center ">
         <TouchableOpacity onPress={() => navigation.navigate("UserScreen")}>
           <View className="justify-center mt-1">
             <View className="flex-row space-x-1">
@@ -97,7 +97,7 @@ export default function DashboardScreen({ route }) {
                   className="h-12 w-12 rounded-full"
                 />
               ) : (
-                <FontAwesome name="user-circle-o" size={27} color="black" />
+                <FontAwesome name="user-circle-o" size={30} color="black" />
               )}
 
               <Text className="self-center text-[15px] font-semibold">
@@ -155,7 +155,7 @@ export default function DashboardScreen({ route }) {
         iterationCount={"infinite"}
         animation={"pulse"}
         easing="ease-in-out"
-        className="justify-center mt-10 ml-3"
+        className="justify-center mt-9 ml-3"
       >
         <Text className="text-[19px] text-black pl-4">
           Send, invest money on the go
@@ -253,21 +253,6 @@ export default function DashboardScreen({ route }) {
           </View>
         </View>
       </TouchableOpacity>
-
-      {/* e-Cedi LOGO */}
-      <Animatable.View
-        iterationCount={"infinite"}
-        animation={"pulse"}
-        easing="ease-in-out"
-        className="flex-row px-6 mt-10 items-center justify-center space-x-1"
-      >
-        <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
-          <Text className="text-white text-[16px] font-semibold text-center">
-            e
-          </Text>
-        </View>
-        <Text className="text-black text-[18px] font-semibold">CEDI</Text>
-      </Animatable.View>
     </SafeAreaView>
   );
 }

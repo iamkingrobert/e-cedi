@@ -4,9 +4,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  Pressable,
 } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -17,22 +16,11 @@ import AirtelTigo from "../assets/airteltigo-money.png";
 import Vodafone from "../assets/Vodafone-Cash.jpeg";
 import CreditCard from "../assets/eCediCard.jpeg";
 import Payment from "../components/Payment";
-import { getAuth } from "firebase/auth";
-import app, { storage } from "../config/firebase";
-import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage";
 import { MaterialIcons } from "@expo/vector-icons";
 import Paystack from "../assets/Paystack.png";
+import { TopUpModal } from "../components/TopUpModal";
 
 export default function TopUpScreen() {
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const userId = getAuth().currentUser.uid;
-  const docRef = doc(db, "users", userId);
-  const [firstName, setFirstName] = useState();
-  const [userPhoto, setUserPhoto] = useState();
-
   const [modalVisible, setModalVisible] = useState(false);
 
   //TRIGGER PAYSTACK MODAL
@@ -40,39 +28,6 @@ export default function TopUpScreen() {
 
   // NAVIGATION CONTROL
   const navigation = useNavigation();
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setFirstName(docSnap.data().firstName);
-
-          const user = auth.currentUser;
-          if (user && user.photoURL) {
-            setUserPhoto(user.photoURL);
-          } else {
-            // User does not have a photoURL set, you can handle this case accordingly
-          }
-
-          const userId = auth.currentUser.uid;
-          const storagePath = `images/${userId}`;
-
-          // Retrieve the user's profile photo from Firebase Storage
-          const storageRef = ref(storage, storagePath);
-          const downloadURL = await getDownloadURL(storageRef);
-
-          // Set the userPhoto state with the download URL
-          setUserPhoto(downloadURL);
-        }
-      } catch (error) {
-        // Handle the Promise rejection error here
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    getData();
-  }, []);
 
   // TOPUP MODAL CONTROL
   const [showModal, setShowModal] = useState(false);
