@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
+import Payment from "./Payment";
 
 export function TopUpModal({ isVisible, onClose, onConfirm }) {
-  const [amount, setAmount] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleConfirm = () => {
-    if (amount && parseFloat(amount) > 0) {
-      onConfirm(parseFloat(amount));
+    if (enteredAmount && parseFloat(enteredAmount) > 0) {
+      onConfirm(parseFloat(enteredAmount));
     }
   };
 
@@ -39,9 +40,9 @@ export function TopUpModal({ isVisible, onClose, onConfirm }) {
         <TextInput
           placeholder="Enter Amount"
           keyboardType="numeric"
-          value={amount}
+          value={enteredAmount}
           autoFocus={true}
-          onChangeText={(text) => setAmount(text)}
+          onChangeText={(text) => setEnteredAmount(text)}
           style={{
             borderWidth: 1,
             borderColor: "gray",

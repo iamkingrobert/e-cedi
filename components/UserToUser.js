@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from "react-native";
 import Modal from "react-native-modal";
 import { getAuth } from "firebase/auth";
@@ -13,6 +14,7 @@ import { app, firestore } from "../config/firebase";
 import * as Animatable from "react-native-animatable";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBalance } from "../features/balanceSlice";
+import Successful from "../assets/successful.png";
 
 import {
   doc,
@@ -101,12 +103,33 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           backgroundColor: "white",
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
-          paddingTop: 14,
+          paddingTop: 10,
           height: "40%",
         }}
       >
-        <View className="items-center justify-center">
-          <Text className="text-center text-[20px] pb-2">Send Money</Text>
+        <View className="items-center justify-center flex-row space-x-[240px] mb-7">
+          <Animatable.View
+            iterationCount={"infinite"}
+            animation={""}
+            easing="ease-in-out"
+            className="flex-row items-center justify-center space-x-1"
+          >
+            <View className="w-7 h-7 bg-black rounded-full items-center justify-center">
+              <Text className="text-white text-[18px] font-semibold text-center">
+                e
+              </Text>
+            </View>
+            <Text className="text-black text-[18px] font-semibold">CEDI</Text>
+          </Animatable.View>
+
+          <TouchableOpacity
+            onPress={onClose}
+            className="items-center justify-center bottom-3"
+          >
+            <Text className="text-[18px] text-gray-600 font-medium text-center top-3">
+              Cancel
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <TextInput
@@ -162,15 +185,20 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={onClose}
-          className="items-center justify-center mt-3"
-        >
-          <Text className="text-[18px] text-gray-500 font-medium">Cancel</Text>
-        </TouchableOpacity>
-
         {transactionComplete && (
-          <Text className="text-center">Transaction Complete!</Text>
+          <Animatable.View
+            iterationCount={"infinite"}
+            animation={"pulse"}
+            easing="ease-in-out"
+            className="flex-row space-x-1 justify-center items-center mt-5"
+          >
+            <View>
+              <Image source={Successful} className="h-8 w-8" />
+            </View>
+            <Text className="text-center text-[16px] font-medium">
+              Payment Successful
+            </Text>
+          </Animatable.View>
         )}
       </View>
     </Modal>

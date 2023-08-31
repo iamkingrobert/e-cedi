@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Modal from "react-native-modal";
 import { getAuth } from "firebase/auth";
 import { app, firestore } from "../config/firebase";
 import * as Animatable from "react-native-animatable";
 import { doc, getFirestore, updateDoc, getDoc } from "firebase/firestore";
+import Successful from "../assets/successful.png";
 
 const InvestmentModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState();
@@ -111,22 +112,20 @@ const InvestmentModal = ({ visible, onClose }) => {
         </Picker>
 
         {transactionComplete && (
-          <Text className="text-center pt-3">Investment Successful</Text>
-        )}
-
-        <Animatable.View
-          iterationCount={"infinite"}
-          animation={""}
-          easing="ease-in-out"
-          className="flex-row px-6 mt-2 items-center justify-center space-x-1"
-        >
-          <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
-            <Text className="text-white text-[16px] font-semibold text-center">
-              e
+          <Animatable.View
+            iterationCount={"infinite"}
+            animation={"pulse"}
+            easing="ease-in-out"
+            className="flex-row space-x-1 justify-center items-center"
+          >
+            <View>
+              <Image source={Successful} className="h-8 w-8" />
+            </View>
+            <Text className="text-center text-[16px] font-medium">
+              Successful
             </Text>
-          </View>
-          <Text className="text-black text-[17px] font-semibold">CEDI</Text>
-        </Animatable.View>
+          </Animatable.View>
+        )}
       </View>
     </Modal>
   );

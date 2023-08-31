@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function Payment({
   triggerTransaction,
   setTriggerTransaction,
-  paymentAmount,
+  enteredAmount,
 }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const [balance, setBalance] = useState(0);
@@ -56,6 +56,7 @@ export default function Payment({
   }, []);
 
   const amountPaid = 2000;
+  //enteredAmount;
 
   const onSuccessTransaction = async (res) => {
     try {
@@ -63,19 +64,16 @@ export default function Payment({
       const db = getFirestore();
       const user = auth.currentUser;
       const userId = user.uid;
-      //console.log(userId);
 
       // Update the user's balance in the Firestore database
       const userRef = doc(db, "users", userId);
       const newbalance = await getDoc(userRef);
-      //console.log(newbalance.data().balance);
+
       let oldBalance = newbalance.data().balance;
 
       await updateDoc(userRef, {
         balance: amountPaid + oldBalance,
       });
-
-      //console.log("User balance updated");
 
       // Fetch the user's document to get the updated balance
       onSnapshot(userRef, (snapshot) => {
