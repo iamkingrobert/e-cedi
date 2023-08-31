@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Paystack, paystackProps } from "react-native-paystack-webview";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { getAuth } from "firebase/auth";
+
 import {
   getFirestore,
   doc,
@@ -11,7 +12,11 @@ import {
 } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Payment({ triggerTransaction, setTriggerTransaction }) {
+export default function Payment({
+  triggerTransaction,
+  setTriggerTransaction,
+  paymentAmount,
+}) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const [balance, setBalance] = useState(0);
   const [userEmail, setUserEmail] = useState("");
@@ -50,13 +55,10 @@ export default function Payment({ triggerTransaction, setTriggerTransaction }) {
     fetchUserData();
   }, []);
 
-  //Fetching User Data at the block of code up
-
-  const amountPaid = 2000; // Set the desired amount here
+  const amountPaid = 2000;
 
   const onSuccessTransaction = async (res) => {
     try {
-      //console.log("Paystack response:", res);
       const auth = getAuth();
       const db = getFirestore();
       const user = auth.currentUser;

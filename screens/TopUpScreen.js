@@ -107,7 +107,7 @@ export default function TopUpScreen() {
 
         {/* AIRTELTIGO BUTTON*/}
         <TouchableOpacity
-          onPress={() => setShowModal(true)}
+          onPress={() => setModalVisible(true)}
           className="items-center justify-center"
         >
           <Animatable.View
@@ -125,7 +125,7 @@ export default function TopUpScreen() {
 
         {/* Vodafone BUTTON*/}
         <TouchableOpacity
-          onPress={() => setShowModal(true)}
+          onPress={() => setModalVisible(true)}
           className="items-center justify-center"
         >
           <Animatable.View
@@ -210,7 +210,15 @@ export default function TopUpScreen() {
         </View>
         <Text className="text-black text-[18px] font-semibold">CEDI</Text>
       </Animatable.View>
-      {/* <Payment setTriggerTransaction={setTriggerTransaction} triggerTransaction={triggerTransaction}/> */}
+
+      <TopUpModal
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onConfirm={(amount) => {
+          // Here you can handle the top-up logic with the specified amount
+          setModalVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 }

@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 
 export function TopUpModal({ isVisible, onClose, onConfirm }) {
   const [amount, setAmount] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleConfirm = () => {
     if (amount && parseFloat(amount) > 0) {
@@ -27,35 +28,50 @@ export function TopUpModal({ isVisible, onClose, onConfirm }) {
           backgroundColor: "white",
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
-          padding: 16,
+          paddingTop: 14,
           height: "40%",
         }}
       >
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>Top Up Amount</Text>
+        <View className="items-center justify-center">
+          <Text className="text-center text-[20px] pb-6">Enter Amount</Text>
+        </View>
+
         <TextInput
-          placeholder="Enter amount"
+          placeholder="Enter Amount"
           keyboardType="numeric"
           value={amount}
+          autoFocus={true}
           onChangeText={(text) => setAmount(text)}
           style={{
             borderWidth: 1,
             borderColor: "gray",
-            borderRadius: 5,
+            borderRadius: 10,
+            width: 340,
             padding: 10,
             marginTop: 10,
+            alignSelf: "center",
           }}
         />
         <TouchableOpacity
           onPress={handleConfirm}
           style={{
-            backgroundColor: "blue",
-            marginTop: 10,
-            padding: 10,
+            backgroundColor: "black",
+            marginTop: 20,
+            padding: 15,
             alignItems: "center",
-            borderRadius: 5,
+            borderRadius: 10,
+            alignSelf: "center",
           }}
+          className="items-center justify-center w-[240px]"
         >
-          <Text style={{ color: "white" }}>Confirm</Text>
+          <Text className="text-[18px] text-white font-medium">Top Up</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={onClose}
+          className="items-center justify-center mt-3"
+        >
+          <Text className="text-[18px] text-gray-500 font-medium">Cancel</Text>
         </TouchableOpacity>
       </View>
     </Modal>

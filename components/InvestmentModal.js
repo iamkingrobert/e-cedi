@@ -8,11 +8,11 @@ import * as Animatable from "react-native-animatable";
 import { doc, getFirestore, updateDoc, getDoc } from "firebase/firestore";
 
 const InvestmentModal = ({ visible, onClose }) => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState();
   const [transactionComplete, setTransactionComplete] = useState(false);
   const auth = getAuth(app);
   const db = getFirestore();
-  const userId = auth.currentUser.uid; // Use auth.currentUser.uid directly
+  const userId = auth.currentUser.uid;
   const userRef = doc(db, "users", userId);
 
   const handleInvestment = async () => {
@@ -29,7 +29,7 @@ const InvestmentModal = ({ visible, onClose }) => {
         // Update User's balance
         await updateDoc(userRef, { balance: updatedBalance });
 
-        // Update User's investBalance (assuming you have a field named investBalance)
+        // Update User's investBalance (among user collected doc on signup is investBalance)
         const currentInvestBalance = userSnapshot.data().investBalance || 0;
         const updatedInvestBalance = currentInvestBalance + investAmount;
         await updateDoc(userRef, { investBalance: updatedInvestBalance });
@@ -42,7 +42,7 @@ const InvestmentModal = ({ visible, onClose }) => {
           onClose();
           setTransactionComplete(false);
           setAmount("");
-        }, 1000);
+        }, 2000);
       } else {
         console.log("Insufficient balance");
       }
@@ -111,7 +111,7 @@ const InvestmentModal = ({ visible, onClose }) => {
         </Picker>
 
         {transactionComplete && (
-          <Text className="text-center pt-3">Successful</Text>
+          <Text className="text-center pt-3">Investment Successful</Text>
         )}
 
         <Animatable.View

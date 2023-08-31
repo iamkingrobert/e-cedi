@@ -101,23 +101,13 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           backgroundColor: "white",
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
-          padding: 16,
+          paddingTop: 14,
           height: "40%",
         }}
       >
-        <Animatable.View
-          iterationCount={"infinite"}
-          animation={""}
-          easing="ease-in-out"
-          className="flex-row px-6 mt-2 items-center justify-center space-x-1"
-        >
-          <View className=" w-7 h-7 bg-black rounded-full items-center justify-center">
-            <Text className="text-white text-[16px] font-semibold text-center">
-              e
-            </Text>
-          </View>
-          <Text className="text-black text-[17px] font-semibold">CEDI</Text>
-        </Animatable.View>
+        <View className="items-center justify-center">
+          <Text className="text-center text-[20px] pb-2">Send Money</Text>
+        </View>
 
         <TextInput
           placeholder="Amount"
@@ -135,7 +125,7 @@ const MoneyTransferModal = ({ visible, onClose }) => {
             paddingHorizontal: 10,
             marginVertical: 5,
             alignSelf: "center",
-            marginTop: 25,
+            marginTop: 20,
             marginBottom: 8,
           }}
         />
@@ -157,10 +147,19 @@ const MoneyTransferModal = ({ visible, onClose }) => {
           }}
         />
         <TouchableOpacity
+          style={{
+            backgroundColor: "black",
+            padding: 15,
+            alignItems: "center",
+            borderRadius: 10,
+            alignSelf: "center",
+          }}
           onPress={handleTransfer}
-          className="items-center justify-center mt-5"
+          className="items-center justify-center mt-4 w-[240px]"
         >
-          <Text className="text-[18px] text-black ">Transfer Money</Text>
+          <Text className="text-[18px] text-white font-medium">
+            Transfer Money
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity

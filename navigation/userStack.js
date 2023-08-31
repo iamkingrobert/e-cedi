@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import DashboardScreen from "../screens/DashboardScreen";
 import TopUpScreen from "../screens/TopUpScreen";
 import UserScreen from "../screens/UserScreen";

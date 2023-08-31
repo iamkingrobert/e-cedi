@@ -281,8 +281,8 @@ const InvestmentScreen = () => {
               </Text>
             </View>
             <InvestmentModal
-              visible={openModal} // Pass the visibility state variable to the modal component
-              onClose={() => setOpenModal(false)} // Define a function to close the modal
+              visible={openModal}
+              onClose={() => setOpenModal(false)}
             />
           </TouchableOpacity>
         </Animatable.View>
