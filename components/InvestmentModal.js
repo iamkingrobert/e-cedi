@@ -7,6 +7,7 @@ import { app, firestore } from "../config/firebase";
 import * as Animatable from "react-native-animatable";
 import { doc, getFirestore, updateDoc, getDoc } from "firebase/firestore";
 import Successful from "../assets/successful.png";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 const InvestmentModal = ({ visible, onClose }) => {
   const [amount, setAmount] = useState();
@@ -124,6 +125,7 @@ const InvestmentModal = ({ visible, onClose }) => {
             <Text className="text-center text-[16px] font-medium">
               Successful
             </Text>
+            <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
           </Animatable.View>
         )}
       </View>

@@ -24,7 +24,7 @@ export default function TopUpScreen() {
   const [modalVisible, setModalVisible] = useState(false);
 
   //TRIGGER PAYSTACK MODAL
-  const [triggerTransaction, setTriggerTransaction] = useState(false);
+  // const [triggerTransaction, setTriggerTransaction] = useState(false);
 
   // NAVIGATION CONTROL
   const navigation = useNavigation();
@@ -86,7 +86,7 @@ export default function TopUpScreen() {
         {/* MTN BUTTON*/}
         <TouchableOpacity
           //
-          onPress={() => setTriggerTransaction(true)}
+          onPress={() => setModalVisible(true)}
           className="items-center justify-center"
         >
           <Animatable.View
@@ -97,12 +97,12 @@ export default function TopUpScreen() {
           >
             <Image source={MTN} className=" h-[100px] w-[100px] rounded-lg" />
           </Animatable.View>
-          {
+          {/* {
             <Payment
               setTriggerTransaction={setTriggerTransaction}
               triggerTransaction={triggerTransaction}
             />
-          }
+          } */}
         </TouchableOpacity>
 
         {/* AIRTELTIGO BUTTON*/}
@@ -214,10 +214,10 @@ export default function TopUpScreen() {
       <TopUpModal
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
-        onConfirm={(amount) => {
-          // Here you can handle the top-up logic with the specified amount
-          setModalVisible(false);
-        }}
+        // onConfirm={(amount) => {
+        //   // Here you can handle the top-up logic with the specified amount
+        //   setModalVisible(false);
+        // }}
       />
     </SafeAreaView>
   );

@@ -48,7 +48,7 @@ export default function DashboardScreen({ route }) {
           setBalance(docSnap.data().balance || 0);
 
           const user = auth.currentUser;
-          if (user && user.photoURL) {
+          if (user && user.photoURL !== null) {
             setUserPhoto(user.photoURL);
           } else {
           }

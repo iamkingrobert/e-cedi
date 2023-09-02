@@ -12,11 +12,7 @@ import {
 } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Payment({
-  triggerTransaction,
-  setTriggerTransaction,
-  enteredAmount,
-}) {
+export default function Payment({ triggerTransaction, setTriggerTransaction }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const [balance, setBalance] = useState(0);
   const [userEmail, setUserEmail] = useState("");
@@ -59,6 +55,7 @@ export default function Payment({
   //enteredAmount;
 
   const onSuccessTransaction = async (res) => {
+    isVisible = false;
     try {
       const auth = getAuth();
       const db = getFirestore();

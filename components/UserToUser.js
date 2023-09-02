@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBalance } from "../features/balanceSlice";
 import Successful from "../assets/successful.png";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 import {
   doc,
@@ -154,6 +155,7 @@ const MoneyTransferModal = ({ visible, onClose }) => {
         />
         <TextInput
           placeholder="Recipient Email"
+          autoCapitalize="none"
           value={email}
           onChangeText={(email) => setEmail(email)}
           keyboardType="email-address"
@@ -198,6 +200,7 @@ const MoneyTransferModal = ({ visible, onClose }) => {
             <Text className="text-center text-[16px] font-medium">
               Payment Successful
             </Text>
+            <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
           </Animatable.View>
         )}
       </View>
