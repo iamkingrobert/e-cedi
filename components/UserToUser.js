@@ -15,7 +15,7 @@ import * as Animatable from "react-native-animatable";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBalance } from "../features/balanceSlice";
 import Successful from "../assets/successful.png";
-import ConfettiCannon from "react-native-confetti-cannon";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   doc,
@@ -29,6 +29,8 @@ import {
 } from "firebase/firestore";
 
 const MoneyTransferModal = ({ visible, onClose }) => {
+  // NAVIGATION CONTROL
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.balance.balance);
 
@@ -79,6 +81,8 @@ const MoneyTransferModal = ({ visible, onClose }) => {
         setTransactionComplete(false);
         setAmount(""); // Reset the amount input field
         setEmail(""); // Reset the email input field
+        // Navigate to the OnSuccess screen
+        navigation.navigate("OnSuccess");
       }, 1000);
     } catch (error) {
       console.error("Error transferring money:", error);
@@ -180,29 +184,10 @@ const MoneyTransferModal = ({ visible, onClose }) => {
             alignSelf: "center",
           }}
           onPress={handleTransfer}
-          className="items-center justify-center mt-4 w-[240px]"
+          className="items-center justify-center mt-5 w-[200px] rounded-full"
         >
-          <Text className="text-[18px] text-white font-medium">
-            Transfer Money
-          </Text>
+          <Text className="text-[18px] text-white">Transfer Money</Text>
         </TouchableOpacity>
-
-        {transactionComplete && (
-          <Animatable.View
-            iterationCount={"infinite"}
-            animation={"pulse"}
-            easing="ease-in-out"
-            className="flex-row space-x-1 justify-center items-center mt-5"
-          >
-            <View>
-              <Image source={Successful} className="h-8 w-8" />
-            </View>
-            <Text className="text-center text-[16px] font-medium">
-              Payment Successful
-            </Text>
-            <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
-          </Animatable.View>
-        )}
       </View>
     </Modal>
   );

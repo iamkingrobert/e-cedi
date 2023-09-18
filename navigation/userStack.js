@@ -8,6 +8,8 @@ import ImagePickers from "../screens/ImagePickers";
 import InvestmentScreen from "../screens/InvestmentScreen";
 import { Provider } from "react-redux";
 import store from "../features/store";
+import OnSuccess from "../screens/OnSuccess";
+
 const Stack = createNativeStackNavigator();
 
 export default function userStack() {
@@ -21,6 +23,7 @@ export default function userStack() {
           <Stack.Screen name="SignOnScreen" component={SignOnScreen} />
           <Stack.Screen name="Update Profile" component={ImagePickers} />
           <Stack.Screen name="Investment" component={InvestmentScreen} />
+          <Stack.Screen name="OnSuccess" component={OnSuccess} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>

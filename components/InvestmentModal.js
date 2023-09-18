@@ -7,9 +7,12 @@ import { app, firestore } from "../config/firebase";
 import * as Animatable from "react-native-animatable";
 import { doc, getFirestore, updateDoc, getDoc } from "firebase/firestore";
 import Successful from "../assets/successful.png";
-import ConfettiCannon from "react-native-confetti-cannon";
+import { useNavigation } from "@react-navigation/native";
 
 const InvestmentModal = ({ visible, onClose }) => {
+  // NAVIGATION CONTROL
+  const navigation = useNavigation();
+
   const [amount, setAmount] = useState();
   const [transactionComplete, setTransactionComplete] = useState(false);
   const auth = getAuth(app);
@@ -44,7 +47,9 @@ const InvestmentModal = ({ visible, onClose }) => {
           onClose();
           setTransactionComplete(false);
           setAmount("");
-        }, 2000);
+          // Navigate to the OnSuccess screen
+          navigation.navigate("OnSuccess");
+        }, 1000);
       } else {
         console.log("Insufficient balance");
       }
@@ -111,23 +116,6 @@ const InvestmentModal = ({ visible, onClose }) => {
           <Picker.Item label="5000" value="5000" />
           {/* Add more options as needed */}
         </Picker>
-
-        {transactionComplete && (
-          <Animatable.View
-            iterationCount={"infinite"}
-            animation={"pulse"}
-            easing="ease-in-out"
-            className="flex-row space-x-1 justify-center items-center"
-          >
-            <View>
-              <Image source={Successful} className="h-8 w-8" />
-            </View>
-            <Text className="text-center text-[16px] font-medium">
-              Successful
-            </Text>
-            <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
-          </Animatable.View>
-        )}
       </View>
     </Modal>
   );

@@ -21,7 +21,7 @@ const InvestmentScreen = () => {
   const navigation = useNavigation();
   const [openModal, setOpenModal] = useState(false);
 
-  const [investBalance, setInvestBalance] = useState(0); // Initialize with 0
+  const [investBalance, setInvestBalance] = useState(0);
   const auth = getAuth(app);
   const db = getFirestore();
   const userId = auth.currentUser.uid;
@@ -71,8 +71,8 @@ const InvestmentScreen = () => {
         </Animatable.View>
       </View>
       <View className="mx-5 mt-[18px] flex-row space-x-2 items-center">
-        <Text className="text-start text-[15px] font-medium text-gray-700">
-          Total Investment
+        <Text className="text-start text-[14px] font-medium text-gray-700">
+          Investment Balance
         </Text>
         <TouchableOpacity>
           <AntDesign name="eyeo" size={22} color="gray" />
@@ -131,16 +131,16 @@ const InvestmentScreen = () => {
           </View>
         </View>
         <InvestmentModal
-          visible={openModal} // Pass the visibility state variable to the modal component
-          onClose={() => setOpenModal(false)} // Define a function to close the modal
+          visible={openModal}
+          onClose={() => setOpenModal(false)}
         />
       </TouchableOpacity>
-      <View className="mx-5 mt-[25px] items-start">
-        <Text className="text-[28px] text-black">Pick</Text>
+      <View className="mx-5 mt-[35px] items-start">
+        <Text className="text-[14px] text-black pt-4">Mutual Funds</Text>
       </View>
       <View className="mx-5 mt-[8px] flex-row space-x-1 items-center">
-        <Text className="text-[15px] text-black">Not sure?</Text>
-        <Text className="text-[15px] text-blue-500">
+        <Text className="text-[13px] text-black">Not sure?</Text>
+        <Text className="text-[13px] text-blue-500">
           Get our recommended funds
         </Text>
       </View>
@@ -176,8 +176,8 @@ const InvestmentScreen = () => {
             </View>
             {/* Money Transfer Modal */}
             <InvestmentModal
-              visible={openModal} // Pass the visibility state variable to the modal component
-              onClose={() => setOpenModal(false)} // Define a function to close the modal
+              visible={openModal}
+              onClose={() => setOpenModal(false)}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -210,8 +210,8 @@ const InvestmentScreen = () => {
             </View>
             {/* Money Transfer Modal */}
             <InvestmentModal
-              visible={openModal} // Pass the visibility state variable to the modal component
-              onClose={() => setOpenModal(false)} // Define a function to close the modal
+              visible={openModal}
+              onClose={() => setOpenModal(false)}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -246,8 +246,8 @@ const InvestmentScreen = () => {
               </Text>
             </View>
             <InvestmentModal
-              visible={openModal} // Pass the visibility state variable to the modal component
-              onClose={() => setOpenModal(false)} // Define a function to close the modal
+              visible={openModal}
+              onClose={() => setOpenModal(false)}
             />
           </TouchableOpacity>
         </Animatable.View>

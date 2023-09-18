@@ -99,9 +99,9 @@ export function TopUpModal({ isVisible, onClose, onConfirm }) {
                 borderRadius: 10,
                 alignSelf: "center",
               }}
-              className="items-center justify-center w-[240px]"
+              className="items-center justify-center w-[200px] rounded-full"
             >
-              <Text className="text-[18px] text-white font-medium">Top Up</Text>
+              <Text className="text-[18px] text-white">Top Up</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
