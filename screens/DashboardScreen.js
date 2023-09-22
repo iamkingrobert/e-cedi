@@ -29,6 +29,7 @@ export default function DashboardScreen({ route }) {
   const [balance, setBalance] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [userPhoto, setUserPhoto] = useState();
+  const [refreshing, setRefreshing] = useState(false);
 
   // NAVIGATION CONTROL
   const navigation = useNavigation();
@@ -70,7 +71,7 @@ export default function DashboardScreen({ route }) {
     };
 
     getData();
-  }, []);
+  }, [refreshing]);
 
   // Hide HEADER HERE
   useLayoutEffect(() => {
@@ -82,6 +83,14 @@ export default function DashboardScreen({ route }) {
   // Handler function to open the modal
   const handleSendMoney = () => {
     setOpenModal(true);
+  };
+
+  // Refresh App Data
+  const refreshData = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
   };
 
   return (
@@ -108,7 +117,9 @@ export default function DashboardScreen({ route }) {
         </TouchableOpacity>
         {/* NOTIFICATION ICONS HERE BELOW */}
         <View className="items-center justify-center right-1">
-          <Ionicons name="notifications" size={27} color="black" />
+          <TouchableOpacity onPress={refreshData}>
+            <Ionicons name="refresh-circle" size={27} color="black" />
+          </TouchableOpacity>
         </View>
       </View>
 
